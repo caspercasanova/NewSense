@@ -5,8 +5,11 @@ export default function Footer() {
   return (
     <footer>
       <div>
-        <p>CopyWrite {date.getFullYear()} </p>
+        <p>All Be Demanded</p>
+        <p>Last Update: </p>
+        <p>CopyWrite {date.getFullYear()}. All Rights Reserved</p>
       </div>
+
       <div className='connection_thing'></div>
     </footer>
   )

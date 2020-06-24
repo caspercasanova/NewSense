@@ -1,0 +1,63 @@
+
+
+
+$color-epic: #BA87FF;
+$infra_purple: #BA87FF;
+$purple_ultra: #b141f1;
+
+
+
+$color-legendary: #fe7a15;
+$yellow_ultra: #ffcc00;
+$pink_ultra: #f92aad;
+$red_alert: #fa2e46a4;
+$sand: #e7d391;
+
+
+$color-rare: #00aeff;
+$cyan_ultra: #58c7e0;
+$color-highlight: #ABF0F9;
+
+
+$color-correct: #0f0;
+$color-complete: #0f0;
+$green_ultra: #54e484;
+
+$color-grey: rgba(255,255,255,0.8);
+
+
+/* 
+#09f7a099
+#206d4bd6
+#49549533
+#49549599
+#495495
+#61e2ff */
+
+
+$background-light: rgb(25, 39, 52);
+$background-dark: rgb(19, 27, 35);
+
+
+$border-radius: 4px;
+
+@mixin bottom-up-gradient($color){ 
+  background-image: radial-gradient(ellipse at top, transparent 60%, $color);
+}
+
+$RareWind: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+$SaintPetersburg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);  
+$DeepBlue:linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+$RipeMalinka: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+$NearMoon: linear-gradient(135deg, #5ee7df 0%, #b490ca 100%);
+$WildApple: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+$LadogaBottom: linear-gradient(135deg, #ebc0fd 0%, #d9ded8 100%);
+$SunnyMorning: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+$LemonGate: linear-gradient(135deg, #96fbc4 0%, #f9f586 100%);
+$NewYork: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+$SoftGrass: linear-gradient(135deg, #c1dfc4 0%, #deecdd 100%);
+$JapanBlush: linear-gradient(135deg, #ddd6f3 0%, #faaca8 100%, #faaca8 100%);
+
+
+
+

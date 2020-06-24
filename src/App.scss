@@ -1,36 +1,29 @@
 
-@import "colors", "sizing";
+@import "styles/colors", "styles/sizing";
 
-/* AT 500 lines, break apart into seperate files */
+/* AT 500 lines, break apart into seperate files 
+
+border: 1px solid rgba(0,162,253,0.15);
+rgba(22, 104, 159, 0.2);
+use this
+
+*/
 
 .App {
   display: flex;
   flex-direction: column;
   color: $color-highlight;
   margin: 0 auto;
-  width: 50%;
- 
+  width: 60%;
+  height: 100%;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
 
-header{
-  width: 100%;
-  border-top: 1px solid $color-highlight;
-  border-left: 1px solid $color-highlight;
-  border-right: 1px solid $color-highlight;
-  border-radius: $border-radius;
-}
-
-nav{
-  display: flex;
-  justify-content: space-evenly;
-}
 
 
-
-.body{
+.Product_Section{
   width: 100%;
   display: flex;
   flex-grow: 1;
@@ -39,39 +32,27 @@ nav{
   
 }
 
-footer{
-  
-  border-bottom: 1px solid $color-highlight;
-  border-left: 1px solid $color-highlight;
-  border-right: 1px solid $color-highlight;
-  border-radius: $border-radius;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 40px;
-  margin-top: 10px;
-}
 
-
-.basic_btn{
+@mixin btn($bg){
+  font-family: 'digital-7';
   display: inline-block;
   position: relative;
-  border-radius: $border-radius;
   cursor: pointer;
-  padding: 1rem 1.5rem;
+  padding: .5em .8em;
   background-image: linear-gradient(transparent,transparent);
-  color: $color-highlight;
-  z-index: 100;
+  color: $bg;
+  z-index: 10;
+  border-radius: .3rem;
+
   &:before{
     content: '';
+    @include bottom-up-gradient($bg);
     position: absolute;
     border-radius: inherit;
     bottom:0;left:0;
     height: 40%;
     width: 100%;
     opacity: 0;
-    background-image: $bottom-up-gradient;
     transition: opacity .7s;
     z-index: -100;
   }
@@ -79,8 +60,14 @@ footer{
     &:before{
       opacity: 1;
     }
-    box-shadow:0px 0px 0px 1px $color-highlight inset;
+    box-shadow:0px 0px 0px 1px $bg inset;
   }
+}
+.basic_btn{
+ @include btn($color-highlight) 
+}
+.buy_btn{
+  @include btn($color-correct) 
 }
 
 
@@ -103,7 +90,7 @@ footer{
     transition: .3s;
     pointer-events: none;
   }
-  & input:focus ~ label {
+  & input:focus ~ label, input:valid ~ label {
     color: red;  
     bottom: -10px
   }
@@ -116,26 +103,39 @@ footer{
 
 
 
-
-
-.ticker_bar{
-  overflow: hidden;
-  background: radial-gradient(transparent 70%, $color-highlight);
+.TickerBar{
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
-  & p{
-    animation: left-to-right 15s linear infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  
+  & button{
+    font-size: 12px;
+  }
+  
+  & .ticker_feed{
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+    padding: 0.5em;
+    background: radial-gradient(transparent 70%, $color-highlight);
+    & p{  
+      animation: left-to-right 15s linear infinite;
+    }
   }
 }
 
 
 
-.product{
+
+.Product{
   display: flex;
   flex-direction: column;
-  border-left: 1px solid $color-highlight;
-  border-right: 1px solid $color-highlight;
+
 }
 .product_main{
   display: flex;
@@ -145,39 +145,47 @@ footer{
 .product_sidebar{
   display: flex;
   flex-direction: column;
-  padding-left: 20px;
-  border: 1px solid red;
-  flex: 1 1 0%;
+  flex: 1.1 1 0%;
+
 }
 
-.placeholder_img_LG{
-  background-color: gray;
+.placeholder_img{
+  border-radius: .3rem;
   width: 350px;
-  height: 400px;
+  height: auto;
   flex:2 1 0%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .picture_slider{
-  display: flex
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  position: relative;
 }
 .placeholder_img_SM{
+  position: relative;
   background-color: gray;
   width: 70px;
   height: 70px;
   box-shadow: inset 0px 0px 1px black;
   &:hover{
     background-color: darken($color: #000000, $amount: 10%);
-    
   }
 }
 
 .product_title{
   display: flex;
   justify-content: space-between;
+  padding-bottom: 100px;
 }
 
 .mini_chart{
   background-color: gray;
+  border: 1px solid black;
   height: 100px;
   width: 270px;
 }
@@ -190,18 +198,21 @@ footer{
    height: auto;
    flex-direction: column;
    align-items: center;
+   position: relative;
 }
 .large_chart{
   width: 95%;
   height: 400px;
   background-color: gray;
   box-shadow: inset 0px 0px 1px black;
+  border: 1px solid black;
 }
 .medium_chart{
   width: 95%;
   height: 250px;
   background-color: gray;
   box-shadow: inset 0px 0px 1px black;
+  border: 1px solid black;
 }
 
 
@@ -227,16 +238,451 @@ footer{
 }
 
 
+
+
+
+/* ACCOUNT FORM STYLING */
+.account_form{
+  display: flex;
+  flex-direction: column;
+}
+.form_col{
+  display: flex;
+  border-radius: $border-radius;
+  border: 1px solid $color-highlight;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  padding-top: 50px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  > h6 {
+    position: absolute;
+    top: 1%; left: 1%;
+  }
+  
+}
+.form_input{
+  position: relative;
+  > label {
+    position: absolute;
+    pointer-events: none;
+    top: 10%;
+    left: 5%;
+    transition: .3s;
+  }
+  > input {
+    width: 220px;
+    height: 40px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+    position: relative;
+  }
+  & input:focus ~ label {
+    color: red;  
+    top: 60%;
+  }
+  & input:valid ~ label {
+    color: $color-correct;  
+    top: -40%;
+    
+  }
+}
+.form_row{
+  display: flex;
+  justify-content: flex-start;
+}
+/* form_input */
+
+
+
+
+/* 
+
+#GLOW TRAY BOX
+
+*/
+
+.tray{
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  &:hover .top_corners{
+    top: 0;
+    &:before{
+      left: 0;
+    }
+    &:after{
+      right: 0;
+    }
+  }
+  &:hover .bottom_corners{
+    bottom: 8px;
+    &:before{
+      left: 0;
+    }
+    &:after{
+      right: 0;
+    }
+  }
+}
+
+.tray_body{
+  width: 100%;
+  height: 100%;
+  padding: 30px 30px;
+  z-index: 10;
+  position: relative;
+}
+
+.tray_bg{
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}
+.glow_corner{
+  transition: .3s;
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+  &:before{
+    content: '';
+    position: absolute;
+    border-color: $color-highlight;
+    border-style: solid;
+    width: 8px;
+    height: 8px;
+    transition: .3s;
+    left: 25px;
+  }
+  &:after{
+    content: '';
+    border-color: $color-highlight;
+    border-style: solid;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    transition: .3s;
+    right: 25px;
+  }  
+}
+
+.top_corners{
+  top: 25px;
+  &:before{
+    border-width: 1px 0 0 1px;  
+  }
+  &:after{
+    border-width: 1px 1px 0 0;
+  }
+}
+
+.bottom_corners{
+  bottom: 25px;
+  &:before{
+    border-width:  0 0 1px 1px;
+  }
+  &:after{
+    border-width: 0 1px 1px 0;
+  }
+}
+
+/* 
+
+GLOW TRAY BOX
+
+*/
+
+
+
+/* 
+
+MODAL
+
+*/
+.Modal_background{
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: auto;
+  z-index: 100;
+  background: rgba(27, 29, 30, .9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Modal{
+  z-index: 100;
+  width: 50%;
+  background: rgb(28, 65, 86);
+  border:  1px solid rgba(0,162,253,1);
+
+  & hr {
+    color: rgba(0,162,253,1);
+  }
+
+
+  & .modal_header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  & .modal_body{
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+.TextBox{
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(0,162,253,0.15);
+  border-radius: .3rem;
+  padding-bottom: 10px;
+  border: 1px solid rgba(0,162,253,1);
+  & .TextBox_header{
+    width: 100%;
+    background-color: rgba(0,162,253,0.15);
+    display: flex;
+    align-items: center;
+    padding: 10px 10px 10px 10px;
+  }
+
+  & .TextBox_body{
+    width: 100%;
+    padding: 0px 10px 0px 10px;
+    font-family: "Jura";
+  }
+  
+}
+
+
+
+.Divider{
+  width: 100%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  & h2{
+    color: $color-legendary;
+  }
+
+  & hr{
+    color: $color-legendary;
+    position: relative;
+  }
+
+}
+
+
+
+.Landing_Page{
+  font-family: 'digital-7';
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid cyan;
+}
+
+.Coming_Soon_Overlay{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(15, 13, 13, 0.94);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid cyan;
+}
+
+
+.countdown{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & .countdown_digits{
+    display: flex;
+  }
+  & .interval{
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+}
+
+
+
+.quantity_container{
+  text-align: center;
+  .quantity_field{
+    display: flex;
+  
+    justify-content: center;
+    & button{
+      font-size: 3em; 
+      padding: .1em .5em;
+    }
+    & .quantity_selector{
+      min-height: 100%; 
+      width: 60px; 
+      background-color: rgb(54, 54, 54); 
+      border: none;
+      text-align: center;
+      font-size: 1.3em;
+    }
+  }
+}
+
+
+.About{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.Highlight{
+  position: relative;
+  & .Underline{
+    position: absolute;
+    height: 2px;
+    width: 110%;
+    background-color: $red_alert;
+    bottom: -20%;
+    left: -5%;
+    transition: .500s; 
+    opacity: .9;
+    z-index: -1;
+  }
+  & .active {
+    height: 120%;
+  }
+   
+}
+
+.ToolTip{
+  position: relative;
+  margin-left: 5px;
+  margin-right: 5px;
+  white-space: nowrap;
+  & span{
+    font-size: 20px;
+    color: $purple_ultra;
+  }
+  & .lightning{
+    fill: $purple_ultra;
+    stroke: $purple_ultra;
+  }
+
+}
+
+.ToolTipDisplay{
+  border: 1px solid $purple_ultra;
+  position: absolute;
+  z-index: 110;
+  background-color: black;
+  min-width: 400px;
+  height: auto;
+  bottom: 200%;
+  overflow: wrap;
+  left: -450%;
+
+  & hr{
+    color: $purple_ultra;
+  }
+  & .ToolTipDisplayBody, h5{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    
+  
+    position: relative;
+  }
+
+
+  &:after{
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: -15%;
+    left: 10%;
+    transform: rotate(-45deg);
+    border-left: 1px solid $purple_ultra;
+    border-bottom: 1px solid $purple_ultra;
+    background-color: black;
+  }
+
+  /*   background: repeating-linear-gradient(
+    0deg,
+    rgba($purple_ultra, 0.95),
+    rgba($purple_ultra, 0.95) 1px,
+    transparent 1px,
+    transparent 2px
+  ); */
+}
+
+
+.HamburgerSVG{
+  fill: $sand;
+  stroke: $sand;
+}
+
+
+
+
+
+
+.blink_soft {
+  animation: blink 2.5s linear infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 @keyframes left-to-right{
   0% {
-    transform: translate(150%, 0);
+    transform: translate(130%, 0);
   }
   100% {
     transform: translate(-100%, 0);
   }
 }
-
-
 
 @keyframes spin {
   from {
@@ -244,5 +690,82 @@ footer{
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+
+.Carousel{
+  width: 100%;
+
+  
+}
+.Practice_card{
+  height: 100px;
+  width: 70px;
+  background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  border: 1px solid cyan;
+}
+
+
+
+@mixin Fields($bg){
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border:1px solid $bg;
+  color: $bg;
+}
+
+// Underlined text
+@mixin labels($bg) {
+  color: $bg;
+  position: absolute;
+  display: block;
+  padding: 0.5em;
+  transition: 0.5s;
+  top: 0%;
+  left: 0%;
+  cursor: inherit;
+}
+
+.Field {
+  position: relative;
+  margin-top: 35px;
+
+  & .FieldInput:focus + label, .FieldInput:valid + label {
+      top: -90%;
+  }
+  & .FieldLabel{
+    @include labels($purple_ultra)
+  } 
+  & .FieldInput{
+    @include Fields($purple_ultra);
+  }
+}
+
+
+.Statistics_Minor{
+  width: 100%;
+  min-height: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+
+  & .Minor{
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 180px;
+    min-height: 200px;
+    box-shadow: 0 0 5px 0px rgba(128, 128, 128, .25);
+    flex: 1 1 0;
+    border-radius: $border-radius;
+ 
+  }
+  & .Count{
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 }

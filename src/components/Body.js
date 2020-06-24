@@ -1,76 +1,82 @@
-import React from 'react'
+import React,{useState} from 'react'
 
-export default function Body() {
+
+
+import ChartMedium from './Charts/ChartMedium.js'
+import ProductPage from './ProductPage'
+import Divider from './Elements/Divider'
+import Modal from './Elements/Modal'
+import About from './About'
+import Header from './Header'
+import Footer from './Footer'
+import Ticker from './Ticker'
+import Checkout from './Checkout' 
+import Carousel from './Elements/Carousel'
+
+import {useToggle} from './utils'
+
+
+
+
+export default function Body({logoutFunction, stripePromise, shoppingCart, stripeProductList}) {
+
+  const [checkout, toggleCheckout] = useToggle() //initiate the checkoutProcess
+  
+  const [stripeProductIndex, setStripeProductIndex] = useState(0) //display current product
+
+
+  const ProductsCarousel = () => {
+    return (
+      <>
+        <Divider title={"Products"}/>
+        <Carousel>
+          {stripeProductList.length 
+          ?   stripeProductList.map((product, index) => (
+              <div key={index} className={'Practice_card'}onClick={()=>setStripeProductIndex(index)}></div>
+            ))
+          : <div>Loading</div>}
+        </Carousel>
+
+      </>
+    )
+  }
+
+  
   return (
-    <div className='body'>
-      <hr />
-      <ProductTitle />  
-      <Product />
+    <>
+      
+      <Header logoutFunction={logoutFunction} shoppingCart={shoppingCart}/>
+      
+      <Ticker />
+      <About />
+      
+      <ProductsCarousel  stripeProductList={stripeProductList} />
+      
+      <ProductPage 
+        stripeProduct={stripeProductList[stripeProductIndex]} 
+        toggleCheckout={toggleCheckout} 
+        shoppingCart={shoppingCart}  
+      />
+ 
+
+      <Donation />
+      <Footer />
+
+      {checkout === true && 
+        <Modal closeModal={toggleCheckout} header={`Checkout: ${stripeProductList[stripeProductIndex].name}`}>
+          <Checkout stripePromise={stripePromise} />
+        </Modal>}
+    </>
+  )
+}
+
+const Donation = () => {
+  /* Goal of 1k */
+  return(
+    <>
+      <Divider title={"Donation"}/>
       <ChartMedium />
-      <ChartLarge />
-      <hr />
-    </div>
+    </>
   )
 }
 
-const ProductTitle = () =>{
- return (
-   <div className='product_title'>
-    <div>
-      <h4>product: h000x001</h4>
-      <h6>$ 150</h6>
-    </div>
-    <ProductMiniChart />
-   </div>
- )
-}
-const ProductMiniChart = () => {
-  return (
-    <div className='mini_chart'></div>
-  )
-}
-
-const Product = () => {
-  return (
-    <div className='product'>
-     
-      <div className='product_main'>
-        <div className='placeholder_img_LG'>
-          {/* Being able to slide look at a bunch of pictures quickly is key */}
-        </div>
-        <div className='product_sidebar'>
-          <h4>h000x001</h4>
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, officia.</p>
-          <button className='basic_btn'>Buy Now</button>
-          <button className='basic_btn'>Favorite</button>
-          <button className='basic_btn'>Reviews</button>
-
-        </div>
-      </div>
-      <div className='picture_slider'>
-        <div className='placeholder_img_SM'></div>
-        <div className='placeholder_img_SM'></div>
-        <div className='placeholder_img_SM'></div>
-        <div className='placeholder_img_SM'></div>
-        <div className='placeholder_img_SM'></div>
-      </div>
-    </div>
-  )
-}
-
-
-const ChartLarge = () => {
-
-  return(
-    <div className='chartHolder'>
-      <div className='large_chart'></div>
-    </div>
-  )
-}
-const ChartMedium = () => {
-  return(
-    <div className='chartHolder'>
-      <div className='medium_chart'></div>
-    </div>
-  )
-}
