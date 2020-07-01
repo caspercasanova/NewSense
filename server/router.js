@@ -4,16 +4,47 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 
 
-const calculateOrderAmount = productList => {
-  //repalce this constance witha calculation fo the orders amount
-  //calculate the order total on the srver to prevent people from
-  //directly manipulating on the client
-  let totalPayment = 0
-  productList.forEach((product) =>{})
+let productsFromStripeList;
 
-  return 1500
+const calculateOrderAmount = productList => {
+
+  let pricesObj = {}
+  pricesObj.orderTotal = 0
+    
+  let calculatePrice = (itemID, quantity = 0) => {
+    let unitPrice;
+    for(let product of productsFromStripeList){
+      if(product.id === itemID){
+        unitPrice = product.price.unit_amount
+        break
+      }
+    }
+    let total = quantity * unitPrice
+    pricesObj.orderTotal += total
+    return [unitPrice, total]  
+  }
+
+  
+
+
+  //! i feel like this is not very smart
+  for(let item in productList){
+    let [unitPrice, unitTotal] = calculatePrice(item, productList[item])
+    pricesObj[item] = {unitPrice, unitTotal}
+  } 
+
+pricesObj.currency= 'usd'
+return pricesObj
 }
 
+
+router.route('/calculatePrice')
+      .post((req, res) => {
+        let products = req.body
+        let pricesObj = calculateOrderAmount(products)
+        console.log(pricesObj)
+        res.send(pricesObj)
+      })
 
 
 
@@ -22,7 +53,7 @@ const calculateOrderAmount = productList => {
 const create_Customer_With_Stripe = () => stripe.customers.create()
 
 //Retrieve Products
-const retrieve_ALL_Products_From_Stripe = () => stripe.products.list({limit: 10}) 
+const retrieve_ALL_Products_From_Stripe = () => stripe.products.list({limit: 20}) 
 const retrieve_SINGLE_Product_From_Stripe = (productID = "prod_HSG4rqyRcdgO2w") => stripe.products.retrieve(productID)
 
 //Retrieve Product Price
@@ -67,6 +98,9 @@ router.route('/all_products_and_prices')
             }
           }
 
+          // ! set products object
+          productsFromStripeList = products.data
+
           console.log('I Merged')
           res.send(products)
 
@@ -78,40 +112,7 @@ router.route('/all_products_and_prices')
         }
       })
 
-router.route('/get_product/:id')
-      .get(async (req, res) => {
-        try{
-          let data = await retrieve_SINGLE_Product_From_Stripe(`${req.params.id}`)
-          console.log(data)
-          res.send(data)
-        }catch(error){
-          res.send(error)
-        }
-      })
 
-
-router.route('/all_prices')
-      .get(async (req, res) => {
-        try{
-          let data = await retrieve_ALL_Prices_From_Stripe()
-          res.send(data)
-        } catch(error){
-          res.send(error)
-        }
-      })
-
-router.route('/get_product_price/:id')
-      .get(async (req, res) => {
-        let {id} = req.params.id
-        console.log(req.params.id, id, 'i recieved get products prices')
-        try{
-          let data = await retrieve_SINGLE_Price_From_Stripe(id)
-          console.log(data)
-          res.send(data)
-        }catch(error){
-          res.send(error)
-        }
-      })
 
 
 

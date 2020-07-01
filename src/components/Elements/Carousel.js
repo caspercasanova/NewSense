@@ -4,7 +4,10 @@ export default function Carousel({selectFunction, children}) {
 
   return (
     <div className='Carousel'>
-      {[children]}
+      <ul className='Carousel_Inner'>
+        {[children]}
+      </ul>
+      <div className='Carousel_Progress_Bar' />
     </div>
   )
 }

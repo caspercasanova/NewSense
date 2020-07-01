@@ -5,49 +5,37 @@ import CheckoutForm from './CheckoutForm.js'
 
 
 
-export default function Checkout({shoppingList, stripePromise}) {
+import Cart from './Cart'
+
+
+export default function Checkout({shoppingCart, stripeProductList, stripePromise}) {
   let [stage, setStage] = useState(0)
+
+
+  
+
+let ConfirmCart = () =>  (
+    <div>
+      <div>
+        Please Confirm Your Cart
+      </div>
+      <div>
+        <Cart confirmOrder={()=>setStage(stage += 1)} shoppingCart={shoppingCart} stripeProductList={stripeProductList}/>
+      </div>
+    </div>
+  )
 
 
   return (
     <div>
-      {stage === 0 && <ConfirmCart confirmOrder={()=>setStage(stage += 1)}/>}
+      {stage === 0 && <ConfirmCart />}
       {stage === 1 && 
              
       <Elements stripe={stripePromise}>
-            <CheckoutForm />
+            <CheckoutForm shoppingCart={shoppingCart} />
       </Elements> 
     }
     </div>
   )
 }
 
-
-
-const ConfirmCart = ({shoppingList, confirmOrder}) => {
-  let ProductCard = ({name = 'Sick', pricePer = 100, quantity = 1}) => (
-    <li className='ProductCard'>
-      <div>{name}</div>
-      <div>{quantity}</div>
-      <div>
-          <div>
-            price per unit: {pricePer}
-          </div>
-          <div>
-            {pricePer * quantity}
-          </div>
-        </div>
-    </li>
-  )
-  
-  return(
-    <div className='ConfirmCart'>
-      <ul className='CartList'>
-        {shoppingList.map((product, index) => (
-          <ProductCard  name={product.name} quantity={product.quantity} pricePer={product.price} />
-        ))}
-      </ul>
-      <button className='basic_btn' onClick={confirmOrder}>Confirm Order</button>
-    </div>
-  )
-}

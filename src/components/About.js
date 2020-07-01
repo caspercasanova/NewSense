@@ -10,8 +10,9 @@ export default function About() {
     <div className='About'>
       <div>
         <Textfield>
-          <p>This is simply dummy text of the printing and typesetting industry.</p><Tooltip message={'I really want this to be cool. And so i really really really hopee this shit murders the competition when it arrives'} title={'Please Be Sick Yo'}/>
-          <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum <Highlight newtab link={`https://wordpress.org/support/topic/how-to-stop-line-break-after-span-element/`}>Explore</Highlight>.</p>
+          <p>Welcome to NSA.</p><Tooltip message={'This is a test site, do not give us money.'} title={'Please Be Aware'}/>
+          <p>Though in a prototypal stage, NSA will be offically launching ASAP with new and exciting items. Details will come. Perhaps You Would like to hear about them as soon as they come out?</p>
+          <p>Created and currently maintained by <Highlight newtab link={`https://www.linkedin.com/in/310-nicholas-lopez/`}>Nicholas Lopez</Highlight>.</p>
         </Textfield>
       </div>
 

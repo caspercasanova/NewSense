@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react';
 import Axios from 'axios'
 import './App.scss';
 
-
+import {firestore} from './firebase/firebase'
 
 import Body from './components/Body'
 import LandingPage from './components/LandingPage'
@@ -18,7 +18,7 @@ import {useShoppingCart, useToggle} from './components/utils' // custom hooks & 
 function App() {
   
   
-  const [isLoggedIn, toggleLogin] = useToggle() //switch based off debugging
+  const [isLoggedIn, toggleLogin] = useToggle(true) //defaults to false
 
 
   const shoppingCart = useShoppingCart() 
@@ -49,6 +49,14 @@ function App() {
   }, [])
 
 
+
+  useEffect(() => {
+    const fetchFireStoreData = async() => {
+      return await firestore.collection('posts')
+    }
+    let data = fetchFireStoreData()
+    console.log(data)
+  }, [])
   
 
 

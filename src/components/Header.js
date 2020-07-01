@@ -2,12 +2,13 @@ import React from 'react'
 import HamburgerSVG from '../svgs/HamburgerSVG'
 import {useToggle} from './utils'
 
-export default function Header({setPage, logoutFunction}) {
+export default function Header({toggleShoppingCart, logoutFunction}) {
   return (
       <header>
         <Hamburger>
           <button onClick={logoutFunction} className="basic_btn">Logout</button>
-          <Cart />
+          <button onClick={toggleShoppingCart} className="green_btn">Cart</button>
+
         </Hamburger>
         <h1>New Sense Active</h1>
       </header>   
@@ -15,13 +16,7 @@ export default function Header({setPage, logoutFunction}) {
 }
 
 
-const Cart = () => {
-  return(
-    <button className='buy_btn'>
-      Cart
-    </button>
-  )
-}
+
 
 
 const Hamburger = ({children}) => {

@@ -7,15 +7,23 @@ import Field from './Elements/Field'
 
 const CARD_OPTIONS ={
   style: {
+    empty: {
+      fontSize: '20px',
+      fontFamily: 'digital-7',
+      letterSpacing: '.5em', 
+      color: '#b141f1',
+    },
     base: {
-      fontSize: '16px',
-      color: '#424770',
+      fontSize: '20px',
+      fontFamily: 'digital-7',
+      letterSpacing: '.5em',
+      color: '#b141f1',
       '::placeholder': {
-        color: '#aab7c4',
+        color: '#BA87FF',
       },
     },
     invalid: {
-      color: '#9e2146',
+      color: '#fa2e46a4',
     },
   },
 }
@@ -25,13 +33,14 @@ const CARD_OPTIONS ={
 4242424242424242 	Succeeds and immediately processes the payment.
 4000000000003220 	3D Secure 2 authentication must be completed for a successful payment.
 4000000000009995 	Always fails with a decline code of insufficient_funds
-
 */
+//! look up shipping address object 
+//! https://stripe.com/docs/js/appendix/shipping_address
 
 
 const CardField = ({onChange}) => {
   return (
-    <div className="FormRow">
+    <div className="Card_Field">
       <CardElement options={CARD_OPTIONS} onChange={onChange} />
     </div>
   )
@@ -80,7 +89,7 @@ const ResetButton = ({onClick}) => (
 
 
 
-const CheckoutForm = ({shoppingList}) => {
+const CheckoutForm = ({shoppingCart, stripeProductList}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -113,11 +122,10 @@ const CheckoutForm = ({shoppingList}) => {
   useEffect(() => {
     //get product details such as currency and amount from server
     //to esure it client cant tamper things
-      Axios.post('/get_shopping_cart_total', shoppingList)
-      .then(({data}) => {
-        setAmount(data.amount / 100)
-        setCurrency(data.currency)
-      })
+    let priceData = shoppingCart.returnPrice()
+    setAmount(priceData.orderTotal / 100)
+    setCurrency(priceData.currency)
+      
       //step 2: Create Payment Intent over Stripe API
       Axios.post('/create-payment-intent')
         .then(({data}) => {
@@ -145,11 +153,8 @@ const CheckoutForm = ({shoppingList}) => {
     } 
 
 
-    if(cardComplete){
+    if(cardComplete)
       setProcessing(true);
-    }
-
-
 
     //step 3 use clientSecret and cardelement to confirm payment with stripe 
     console.log(clientSecret)
@@ -212,12 +217,11 @@ const CheckoutForm = ({shoppingList}) => {
 
 
     <form  className="Payment_Form" onSubmit={handleSubmit}>
-      <fieldset>
+      <fieldset className="FormGroup">
         <Field 
           label="Name"
           id="name"
           type="text"
-          placeholder="CC NOVA"
           required
           autoComplete="name"
           value={billingDetails.name}
@@ -227,89 +231,79 @@ const CheckoutForm = ({shoppingList}) => {
           label="Email"
           id="email"
           type="text"
-          placeholder="NSA@gmail.com"
           required
           autoComplete="email"
           value={billingDetails.email}
           onChange={(e)=> setBillingDetails({...billingDetails, email: e.target.value})}
-        />
-        <Field 
-          label="Phone #"
-          id="name"
-          type="text"
-          placeholder="(310)-013-1310"
-          required
-          autoComplete="tel"
-          value={billingDetails.phone}
-          onChange={(e)=> setBillingDetails({...billingDetails, phone: e.target.value})}
-        />
-      </fieldset>
-      
-      <fieldset className="FormGroup">
-        <Field 
-          label="City"
-          id="address_city"
-          type="text"
-          placeholder="Redondo Beach"
-          required
-          value={shippingDetails.address_city}
-          onChange={(e)=> setShippingDetails({...shippingDetails, address_city: e.target.value})}
-        />
-        <Field 
-          label="Country"
-          id="address_country"
-          type="text"
-          placeholder="US"
-          required
-          value={shippingDetails.address_country}
-          onChange={(e)=> setShippingDetails({...shippingDetails, address_country: e.target.value})}
-        />
+          />
+        </fieldset>
+        
+        <fieldset className="FormGroup">
+          <Field 
+            label="Phone #"
+            id="name"
+            type="text"
+            required
+            autoComplete="tel"
+            value={billingDetails.phone}
+            onChange={(e)=> setBillingDetails({...billingDetails, phone: e.target.value})}
+          />
+          <Field 
+            label="Address 1"
+            id="address_line1"
+            type="text"
+            required
+            value={shippingDetails.line1}
+            onChange={(e)=> setShippingDetails({...shippingDetails, address_line1: e.target.value})}
+          />
+        </fieldset>
 
-        <Field 
-          label="Address 1"
-          id="address_line1"
-          type="text"
-          placeholder="310 Pacific Coast Highway "
-          required
-          value={shippingDetails.line1}
-          onChange={(e)=> setShippingDetails({...shippingDetails, address_line1: e.target.value})}
-        />
-        <Field 
-          label="Address 2"
-          id="address_line2"
-          type="text"
-          placeholder=""
-          value={shippingDetails.address_line2}
-          onChange={(e)=> setShippingDetails({...shippingDetails, address_line2: e.target.value})}
-        />
-        <Field 
-          label="Postal Code"
-          id="address_zip"
-          type="text"
-          required
-          value={shippingDetails.address_zip}
-          onChange={(e)=> setShippingDetails({...shippingDetails, address_zip: e.target.value})}
-        />
-        <Field 
-          label="State"
-          id="address_state"
-          type="text"
-          placeholder="California"
-          required
-          value={shippingDetails.address_state}
-          onChange={(e)=> setShippingDetails({...shippingDetails, address_state: e.target.value})}
-        />
-      </fieldset>
-      
-      
-      <fieldset className="FormGroup">
-        <CardField 
-          onChange={(e) => {
-            setError(e.error)
-            setCardComplete(e.complete)
-          }}
-        />
-      </fieldset>
+        <fieldset className="FormGroup">
+         <Field 
+            label="City"
+            id="address_city"
+            type="text"
+            required
+            value={shippingDetails.address_city}
+            onChange={(e)=> setShippingDetails({...shippingDetails, address_city: e.target.value})}
+          />
+          <Field 
+            label="State"
+            id="address_state"
+            type="text"
+            required
+            value={shippingDetails.address_state}
+            onChange={(e)=> setShippingDetails({...shippingDetails, address_state: e.target.value})}
+          />
+        </fieldset>
+        
+        <fieldset className="FormGroup">
+          <Field 
+            label="Postal Code"
+            id="address_zip"
+            type="text"
+            required
+            value={shippingDetails.address_zip}
+            onChange={(e)=> setShippingDetails({...shippingDetails, address_zip: e.target.value})}
+          />
+          <Field 
+            label="Country"
+            id="address_country"
+            type="text"
+            required
+            value={shippingDetails.address_country}
+            onChange={(e)=> setShippingDetails({...shippingDetails, address_country: e.target.value})}
+          />
+        </fieldset>
+        
+        <fieldset className="FormGroup">
+          <CardField 
+            onChange={(e) => {
+              setError(e.error)
+              setCardComplete(e.complete)
+            }}
+          />
+        </fieldset>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
           Pay Us

@@ -1,29 +1,42 @@
-  import {useState, useCallback, useRef, useEffect, useLayoutEffect, useReducer} from 'react'
-  
-  
-export const useInterval = (callback, delay) => { //taken from dan abramov
-    const savedCallback = useRef()
+import {useState, useCallback, useRef, useEffect, useLayoutEffect} from 'react'
+import Axios from 'axios'  
 
-    useEffect(() => {
-      savedCallback.current = callback
-    })
-
-    useEffect(() => {
-      function tick(){
-        savedCallback.current();
-      }
-
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id)
-    }, [delay])
-
-  }
+// TODO  https://usehooks.com/useAuth/ + firebase
 
 
 
 
+// generic inclusive random function
+// random(1, 101)
+export const random = (min, max) => Math.floor(Math.random() * (max - min)) + min;
 
-export function useToggle(initialValue = false) { //taken from joshwcomeau
+
+
+// taken from dan abramov
+// save reference of interval between renders
+export const useInterval = (callback, delay) => { 
+  const savedCallback = useRef()
+
+  useEffect(() => {
+    savedCallback.current = callback
+  })
+
+  useEffect(() => {
+    function tick(){
+      savedCallback.current();
+    }
+
+    let id = setInterval(tick, delay);
+    return () => clearInterval(id)
+  }, [delay])
+
+}
+
+
+
+
+//taken from joshwcomeau
+export function useToggle(initialValue = false) {
   const [value, setValue] = useState(initialValue);
   const toggle = useCallback(() => {
     setValue(v => !v);
@@ -33,61 +46,94 @@ export function useToggle(initialValue = false) { //taken from joshwcomeau
 
 
 
+// Cart hook that returns a single cart object 
+// that has methods within it to add/remove/update price
+// TODO i would love to add the methods to the prototype 
+  // to keep the cart object cleaner but its not working 
+  // currently
+export function useShoppingCart(){  //! needs documentation!
 
+  const [cart, setCart] = useState({
+    list: {},
+    price: {}
+  })
 
+  // used to calculate prices on the server 
+  // every time the cart is updated
 
-export function useShoppingCart(state, action){
-
-
-  const [cart, setCart] = useState({})
-  
-  
-  
-  cart.AddItem = (itemID) => {
-    setCart({...cart, [itemID]: 1}) 
-    console.log(cart.prototype)
+  let calculatePrice = (theoreticalList) => {
+    return  Axios.post('/calculatePrice', theoreticalList)
   }
-  cart.DeleteItem = (itemID) => {
-    let newObj = cart
-    delete newObj[itemID]
-    setCart(newObj)
-    console.log(cart)
+
+  
+  // can be refactored!
+  cart.returnPrice = async() => {
+    let res = await calculatePrice(cart.list)
+    let {data} = res
+    return data
   }
-  cart.incrementItem = (itemID) => {
-    if(cart[itemID] === undefined){
-      cart.AddItem(itemID)
+
+
+  cart.incrementItem =  async (itemID, quanity = 1) => {
+    if(cart.list[itemID] === undefined){ //if no item exists
+      
+      let newList = {...cart.list, [itemID]: quanity}
+      let res = await calculatePrice(newList) 
+      let {data} = res
+      let newState = {...cart, list: newList, price: data} 
+      setCart(newState)
+      
+
     } else {
-      setCart({...cart, [itemID]: cart[itemID] += 1})
-      console.log(cart)
+
+      let newList = {...cart.list, [itemID]: cart.list[itemID] += quanity}
+      let res = await calculatePrice(newList)
+      let {data} = res
+      let newState = {...cart, list: newList, price: data}
+      setCart(newState)
+    
     }
+    console.log(cart, 'I Added an Item to the cart!')
   }
-  cart.decrementItem = (itemID) => {
-    if(cart[itemID] === 0){
-      cart.DeleteItem(itemID)
+
+  cart.decrementItem = async (itemID, quanity = 1) => {
+    if(cart.list[itemID] === 1){ //if delete item automatically
+      
+      let newList = {...cart.list}
+      delete newList[itemID]
+      let res = await calculatePrice(newList)
+      let {data} = res
+      let newState = {...cart, list: newList, price: data}
+      setCart(newState)
+
     } else {
-      setCart({...cart, [itemID]: cart[itemID] -= 1})
-      console.log(cart)
+
+      let newList = {...cart.list, [itemID]: cart.list[itemID] -= quanity}
+      let res = await calculatePrice(newList)
+      let {data} = res
+      let newState = {...cart, newList, price: data}
+      setCart(newState)
+
     }
+    console.log(cart, 'I deleted an item in the cart!')
   }
+
+
+  cart.clearCart = () => {
+    setCart({...cart, list:{}, price: {}})
+  }
+
+
 
   return cart
 }
 
 
-
-
-
-
-
-
-export const random = (min, max) =>               //(inclusive) random(1, 101)
-  Math.floor(Math.random() * (max - min)) + min;
-
-
-
-// might need to debounce or throttle if the profiler is showing we are making mistakes
+// might need to debounce or throttle if the 
+// profiler is showing we are making mistakes
+// taken from joshwcomeau
 // ! https://usehooks.com/useLocalStorage/ research this!
-export const useStickyState = (defaultValue, key) =>{  //taken from joshwcomeau
+export const useStickyState = (defaultValue, key) =>{  
   const [value, setValue] = useState(() => {
     const stickyValue = window.localStorage.getItem(key)
 
@@ -101,78 +147,4 @@ export const useStickyState = (defaultValue, key) =>{  //taken from joshwcomeau
   }, [key, value])
 
   return [value, setValue]
-}
-
-
-
-
-
-
-//! https://usehooks.com/useAuth/
-
-
-
-
-
-
-
-/* Need To solve This */
-export const useRect = (ref) => {
-  const [rect, setRect] = useState(getRect(ref ? ref.current : null))
-
-  const handleResize = useCallback(() => {
-    if (!ref.current) {
-      return
-    }
-
-    // Update client rect
-    setRect(getRect(ref.current))
-  }, [ref])
-
-  useLayoutEffect(() => {
-    const element = ref.current
-    if (!element) {
-      return
-    }
-
-    handleResize()
-
-    if (typeof ResizeObserver === 'function') {
-      let resizeObserver = new ResizeObserver(() => handleResize())
-      resizeObserver.observe(element)
-
-      return () => {
-        if (!resizeObserver) {
-          return
-        }
-
-        resizeObserver.disconnect()
-        resizeObserver = null
-      }
-    } else {
-      // Browser support, remove freely
-      window.addEventListener('resize', handleResize)
-
-      return () => {
-        window.removeEventListener('resize', handleResize)
-      }
-    }
-  }, [ref.current])
-
-  return rect
-}
-
-function getRect(element) {
-  if (!element) {
-    return {
-      bottom: 0,
-      height: 0,
-      left: 0,
-      right: 0,
-      top: 0,
-      width: 0,
-    }
-  }
-
-  return element.getBoundingClientRect()
 }

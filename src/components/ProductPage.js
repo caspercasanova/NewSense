@@ -8,10 +8,9 @@ import ComingSoonOverlay from './Elements/ComingSoonOverlay.js'
 import Statistics from './Statistics'
 
 /* 
-TODO: Comment Section 
 TODO: SASS or SAAS analytics
-TODO: Make Picture Its own row
 TODO: Donation Bar
+TODO: Comment Section 
 */
 
 
@@ -67,70 +66,27 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
 
 
 
-  const MetaDatas = ({stripeProduct}) => {
-    if(stripeProduct.metadata){
-      return (
-        <ul>
-          {Object.keys(stripeProduct.metadata).map((key, index) => (       
-           <li key={index}>{`${key}: ${stripeProduct.metadata[key]}`}</li>
-          ))}
-        </ul>
-      )
-    } 
-    else return <></>
-  }
 
-
-  const ProductTitle = ({stripeProduct}) =>{
-    return (
-      <div className='product_title'>
-         <h4>{stripeProduct.name}</h4>    
-      </div>
-    )
-  }
-
-  const SideBar = () => {
-    
-
-    return (
-      <Tray className='product_sidebar'>
-    
-
-        <TextBox header={stripeProduct.name}>
-          <div className='product_price'>
-            <h1>$ {stripeProduct.price.unit_amount / 100}</h1>
-          </div>
-
-            <p>{stripeProduct.description}</p>
-            <MetaDatas stripeProduct={stripeProduct}/>
-
-          <div className='quantity_container'>
-            Select Your Quanity
-            <div className="quantity_field">
-              <button className='basic_btn'>-</button>
-              <input className="quantity_selector" ></input>
-              <button className='basic_btn'>+</button>
-            </div>
-          </div>
-        </TextBox>
-          <button className='basic_btn buy_btn' style={{width: "100%"}} onClick={() => shoppingCart.incrementItem(stripeProduct.id)}>Add To Cart</button>
-          <button className='basic_btn buy_btn' style={{width: "100%"}} onClick={toggleCheckout}>Checkout</button>
-     </Tray>
-    )
-  }
-
+  const ProductTitle = ({stripeProduct}) => (
+    <div className='product_title'>
+      <h4>{stripeProduct.name}</h4>    
+    </div>
+  )
+  
+  
+ 
 
   
     let imageSrc;
     stripeProduct.images === undefined ? imageSrc = 'none' : imageSrc = stripeProduct.images[0];
-
-    const MainPicture = () => {
-      return(
-        <Tray className={'placeholder_img'} backgroundImage={imageSrc}>
-              
-        </Tray>
-      )
-    }
+    const MainPicture = () => (
+      <picture>
+        <source srcSet={imageSrc} media="(max-width: 768px)" /> 
+        <img alt='main_pic' className={'MainPicture'} src={imageSrc} />
+      </picture>  
+    )  
+      
+    
 
 
 
@@ -142,7 +98,7 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
         
         <div className='product_main'>
           <MainPicture />
-          <SideBar /> 
+          <SideBar shoppingCart={shoppingCart} stripeProduct={stripeProduct} /> 
         </div>
         <div className='picture_slider'>
           <div className='placeholder_img_SM'></div>
@@ -158,6 +114,56 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
  }
  
  
+ const SideBar = ({shoppingCart, stripeProduct={price: {unit_amount: '0.13'}}, toggleCheckout,}) => {
+  const [quantity, setQuantity] = useState(1)
+
+
+
+  const MetaDatas = ({stripeProduct}) => {
+    return stripeProduct.metadata ? (
+      <ul>
+        {Object.keys(stripeProduct.metadata).map((key, index) => (       
+          <li key={index}>{`${key}: ${stripeProduct.metadata[key]}`}</li>
+        ))}
+      </ul>
+      ) : <></>
+  }
+  return(
+      <Tray className='product_sidebar'>
+        <TextBox header={stripeProduct.name}>
+          <div className='product_price'>
+            <h1>$ {(stripeProduct.price.unit_amount / 100).toFixed(2)}</h1>
+          </div>
+
+            <p>{stripeProduct.description}</p>
+            <MetaDatas stripeProduct={stripeProduct}/>
+
+          <div className='quantity_container'>
+            Select Your Quanity
+            <div className="quantity_field">
+              {/* 
+                //! NEED TO MAKE A UNAVAILABLE BUTTON SO YOU CAN MAKE NEGATIVE INPUTS 
+                //! Need DATA sanitation for input
+              
+              */}
+              <button className='basic_btn' onClick={() => setQuantity(quantity + 1)}>-</button>
+              <input className="quantity_selector" value={quantity} onChange={(e) => setQuantity(e)}></input>
+              <button className='basic_btn' onClick={() => setQuantity(quantity + 1)}>+</button>
+            </div>
+          </div>
+        </TextBox>
+          <button className='basic_btn buy_btn' style={{width: "100%"}} onClick={() => {
+            shoppingCart.incrementItem(stripeProduct.id, quantity)
+            setQuantity(1)
+            }}>Add To Cart</button>
+          <button className='basic_btn buy_btn' style={{width: "100%"}} onClick={toggleCheckout}>Checkout</button>
+     </Tray>
+    )
+}
+
+
+
+
 
  
 const Comments = () => {
