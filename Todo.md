@@ -2,6 +2,7 @@
 ### New Sense Active Development
 --- 
 ### Resources
+https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial
 https://dev.to/shiftyp/react-hooks-snippet-shopping-cart-12lb
 https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 https://usehooks.com/useHover/
@@ -96,7 +97,7 @@ Text Tray Component:
       -Formating File Structure. Might Create a Services folder that includes a Format, ErrorTracking and Currency Formatting. https://www.robinwieruch.de/react-folder-structure suggest creating a domain formating for react files which i might agree with
 
 
-## 6/19/2020: Things To Ponder
 
-
-
+## 6/30/2020: Stripe integration is pretty much done integrated. Things i needede to do include : 
+      - A shopping cart component that posts to the server everytime the shopping cart updates
+      - 
