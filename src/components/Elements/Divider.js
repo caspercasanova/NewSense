@@ -1,14 +1,29 @@
 import React from 'react'
+import styled from 'styled-components'
+
+const StyledDivider = styled.div`
+  width: 100%;
+  border: none;  
+  margin-top: 10px;
+  margin-bottom: 10px;
+  & h2{
+    color: #fe7a15;
+  }
+
+  & hr{
+    color: #fe7a15;
+    width: 100%;
+    height: 2px;
+  }
+`
 
 
-
-const Divider = ({title = 'xx0001xxx', expand, setExpand}) => {
+const Divider = ({title = 'xx0001xxx'}) => {
   return(
-    <div className='Divider' onClick={setExpand}>
+    <StyledDivider>
       <h2>{title}</h2>
       <hr></hr>
-      {expand === false && <div>^^^^^^^^^^^</div>}
-    </div>
+    </StyledDivider>
   )
 }
 

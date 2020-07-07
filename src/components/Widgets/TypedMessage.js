@@ -1,6 +1,7 @@
 import React,{useMemo} from 'react'
 import {animated, useTransition} from 'react-spring'
-/* https://codeworkshop.dev/blog/2020-03-01-creating-an-rpg-dialog-effect-with-react-and-react-spring/ 
+/* 
+https://codeworkshop.dev/blog/2020-03-01-creating-an-rpg-dialog-effect-with-react-and-react-spring/ 
 https://shakuro.com/blog/react-spring-tutorial-making-animated-react-apps
 */
 

@@ -1,9 +1,8 @@
-
+const functions = require('firebase-functions');
 const router = require("express").Router()
 
-
 // stripe 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require('stripe')(functions.config().stripe.secret_key) 
 
 
 
@@ -79,7 +78,7 @@ const retrieve_NSA_Transactions = (optionsObj) => stripe.balanceTransactions.ret
 
 router.route('/get_stripe_api_key')
       .get((req, res) => {
-        let data = process.env.STRIPE_PUBLISHABLE_KEY
+        let data = functions.config().stripe.publishable_key
         res.send(data)
       })
 

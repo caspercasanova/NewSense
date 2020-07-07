@@ -4,35 +4,69 @@ import Tray from './Elements/Tray.js'
 import Divider from './Elements/Divider'
 
 import ChartLarge from './Charts/ChartLarge.js'
-import ComingSoonOverlay from './Elements/ComingSoonOverlay.js'
 import Statistics from './Statistics'
+import Carousel from './Elements/Carousel'
 
-/* 
-TODO: SASS or SAAS analytics
-TODO: Donation Bar
-TODO: Comment Section 
-*/
+import TypedMessage from './Widgets/TypedMessage.js'
+import { useToggle } from './utils.js'
 
 
-
-
-export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout}) {
+export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout, stripeProductList, setStripeProductIndex}) {
   
   return (
-
-    <div className='Product_Section'>
-     
-      <Product 
-        stripeProduct={stripeProduct}  
-        shoppingCart={shoppingCart}
-        toggleCheckout={toggleCheckout}
-        />
-
-      <Statistics />
-      <Comments />
+    <>
+      <ProductsCarousel  stripeProductList={stripeProductList} setStripeProductIndex={setStripeProductIndex}/>
+      <div className='Product_Section'>
       
-    </div>
-  
+        <Product 
+          stripeProduct={stripeProduct}  
+          shoppingCart={shoppingCart}
+          toggleCheckout={toggleCheckout}
+          />
+
+        <Statistics />
+        <Comments />
+        
+      </div>
+    </>
+  )
+}
+
+
+
+
+const ProductsCarousel = ({stripeProductList, setStripeProductIndex}) => {
+  return (
+    <>
+      <Divider title={"Products"}/>
+      <Carousel>
+        {stripeProductList.length 
+        ?   stripeProductList.map((product, index) => (
+            <ProductCarouselCard key={index} product={product} handler={()=>setStripeProductIndex(index)}/>
+          ))
+        : <div>Loading</div>}
+      </Carousel>
+    </>
+  )
+}
+
+const ProductCarouselCard = ({product, handler}) => {
+  const [isShown, setIsShown] = useToggle();
+  return(
+    <li 
+    onClick={handler}
+    onMouseEnter={setIsShown}
+    onMouseLeave={setIsShown}
+    className='Carousel_Item'>
+      <div>{isShown ? <TypedMessage message={`${product.name}`}/> : <p className='blink_soft'>N.S.A.</p>}</div>
+      <div className='Carousel_item_body'>
+        <picture  className='Carousel_Picture' >
+          <source srcSet={product.images[0]} media="(min-width: 1024px)"/>
+          <img src={product.images[0]} alt='carousel_image'/>
+        </picture>
+        <div>{isShown && <TypedMessage message={`$ ${(product.price.unit_amount / 100).toFixed(2)}`}/>}</div>
+      </div>
+    </li>
   )
 }
 
@@ -42,7 +76,7 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
 
  
 
- const TextBox = ({ header=false, children}) => {
+const TextBox = ({ header=false, children}) => {
   /* 
   !: Transition into complete functional element
   */
@@ -61,63 +95,46 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
 
 
 
- const Product = ({shoppingCart, stripeProduct={price: {unit_amount: '0.13'}}, toggleCheckout,}) => {
+
+const Product = ({shoppingCart, stripeProduct={price: {unit_amount: '0.13'}}, toggleCheckout,}) => {
   const [expand, setExpand] = useState(false)
 
 
+  let imageSrc;
+  stripeProduct.images === undefined ? imageSrc = 'none' : imageSrc = stripeProduct.images[0];
 
-
-  const ProductTitle = ({stripeProduct}) => (
-    <div className='product_title'>
-      <h4>{stripeProduct.name}</h4>    
-    </div>
-  )
-  
-  
- 
-
-  
-    let imageSrc;
-    stripeProduct.images === undefined ? imageSrc = 'none' : imageSrc = stripeProduct.images[0];
-    const MainPicture = () => (
-      <picture>
-        <source srcSet={imageSrc} media="(max-width: 768px)" /> 
-        <img alt='main_pic' className={'MainPicture'} src={imageSrc} />
-      </picture>  
-    )  
-      
-    
-
-
-
-   return (
-     <>
+  return (
+    <>
       <Divider title={stripeProduct.name} expand={expand} setExpand={()=>setExpand(!expand)} />
+      
       <div className='Product'>
-        <ProductTitle  stripeProduct={stripeProduct}  />  
         
+        <div className='product_title'>
+          <h4>{stripeProduct.name}</h4>    
+        </div>
+
         <div className='product_main'>
-          <MainPicture />
+          <MainPicture imageSrc={imageSrc}/>
           <SideBar shoppingCart={shoppingCart} stripeProduct={stripeProduct} /> 
         </div>
-        <div className='picture_slider'>
-          <div className='placeholder_img_SM'></div>
-          <div className='placeholder_img_SM'></div>
-          <div className='placeholder_img_SM'></div>
-          <div className='placeholder_img_SM'></div>
-          <div className='placeholder_img_SM'></div>
-          <ComingSoonOverlay />
-        </div>
+
       </div>
-     </>
-   )
- }
+    </>
+  )
+}
+
  
+const MainPicture = ({imageSrc}) => (
+  <picture>
+    <source srcSet={imageSrc} media="(max-width: 768px)" /> 
+    <img alt='main_pic' className={'MainPicture'} src={imageSrc} />
+  </picture>  
+)  
  
- const SideBar = ({shoppingCart, stripeProduct={price: {unit_amount: '0.13'}}, toggleCheckout,}) => {
+
+
+const SideBar = ({shoppingCart, stripeProduct={price: {unit_amount: '0.13'}}, toggleCheckout,}) => {
   const [quantity, setQuantity] = useState(1)
-
-
 
   const MetaDatas = ({stripeProduct}) => {
     return stripeProduct.metadata ? (
@@ -126,8 +143,11 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
           <li key={index}>{`${key}: ${stripeProduct.metadata[key]}`}</li>
         ))}
       </ul>
-      ) : <></>
+    ) 
+    : <></>
   }
+
+
   return(
       <Tray className='product_sidebar'>
         <TextBox header={stripeProduct.name}>
@@ -163,10 +183,9 @@ export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout
 
 
 
-
-
  
 const Comments = () => {
+  /* User Pic, user rank,  */
   return(
     <>
       <Divider title={"Comments"}/>

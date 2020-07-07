@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import "firebase/analytics";
-
+import 'firebase/auth'
 
 
 // Initialize Firebase and add to window
@@ -23,4 +23,16 @@ if(process.env.NODE_ENV === 'development'){
 
 export default firebase;
 
+export const analytics = firebase.analytics();
+
 export const firestore = firebase.firestore();
+
+export const auth = firebase.auth();
+
+export const provider = new firebase.auth.GoogleAuthProvider()
+export const signInWithGoogle = () => auth.signInWithPopup(provider)
+
+
+
+
+

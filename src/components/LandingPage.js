@@ -1,39 +1,142 @@
 import React,{useState} from 'react'
+import {useToggle} from './utils'
 import Countdown from './Widgets/Countdown'
-import Checklist from './Widgets/Checklist'
-
-
-
-/* 
-TODO: Hashing Animation
-TODO: Add a lazy loader Loading at bottom of screen to soft load APIs
-
-
-[encoding, mutating, ]
-*/
+import Field from '../components/Elements/Field'
 import TypedMessage from './Widgets/TypedMessage'
+import {signInWithGoogle} from '../firebase/firebase'
+import NSAlogo from '../NSAbrainDaggertrans.png'
+import {useAuth} from '../firebase/Auth'
+
+import TextField from './Elements/Textfield'
+
+
+
+
+
 
 
 export default function LandingPage({loginFunction}) {
+  const [isSignedIn, setIsSignedIn] = useToggle(true) //toggles forms
+
   return (
-     
-        <div  className='Landing_Page'>
-          <div>
-            <h1> <TypedMessage message={"New Sense Active"}/></h1>
-          </div>
+    <div  className='Landing_Page'>
+      <div>
+        <div><img style={{width: '50px'}} src={NSAlogo} alt='logo'/></div> 
+      </div>
+
+      <div style={{display: "flex", justifyContent:'space-between'}}>
+        <div> 
+          <h1 className='blink_soft'> <TypedMessage message={"New Sense Active"}/></h1>
           
-          <div>
-            <button onClick={loginFunction} className="basic_btn blink_soft">Enter</button>
-          </div>
-
-          <Countdown />   
-          <Checklist />
+          {isSignedIn 
+            ? <LoginBox setIsSignedIn={setIsSignedIn}/>
+            : <button onClick={loginFunction} className="basic_btn blink_soft">Enter</button>
+          }
         </div>
- 
-
+        <div >
+          <TextField>
+            <h2>Sorry for the inconvienence</h2>
+            <p>N.S.A. is currently undergoing a major code refactor.</p>
+            <p>The development team is currently working on the following:</p>
+            <p>- Converting Our Server Routes To Cloud Function</p>  
+            <p>- Testing New Design Aesthetitic</p>  
+            <hr></hr>
+            <p>Estimated Time Until We Are Back Up And Properly Running</p>
+            <Countdown  date={'2020-07-13'}/>
+          </TextField>
+        </div>
+      </div>
+    </div>
   )
 }
 
 
 
 
+const LoginBox = (setIsSignedIn) => {
+  const [login, toggleLogin] = useToggle(true)
+  const [resetPassword, toggleResetPassword] = useToggle()
+
+
+  return(
+    <div>
+      { resetPassword 
+        ? <ResetPassword toggleResetPassword={toggleResetPassword} /> 
+        : 
+        <>
+          <div>
+            <button onClick={()=> toggleLogin(true)} className="basic_btn ">Sign In</button>
+            <button onClick={() => toggleLogin(false)} className="basic_btn">Sign Up</button>
+          </div>
+
+          { login 
+            ? <SignInForm setIsSignedIn={setIsSignedIn}/> 
+            : <SignUpForm /> 
+          }
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <button className="basic_btn" onClick={signInWithGoogle}>Sign In With Google</button>
+            <button onClick={toggleResetPassword} className="basic_btn">Reset Password</button>
+          </div>
+        </>
+      }
+    </div>
+  )
+}
+
+const ResetPassword = ({toggleResetPassword}) => {
+  const [email, setEmail] = useState('')
+  const submit = () => {}
+  return(
+    <div>
+      <button onClick={toggleResetPassword} className="basic_btn">Back</button>
+      <h6><TypedMessage message={"Reset Password:"}/></h6>
+      <h6><TypedMessage message={"Please Enter Your Email Address"}/></h6>
+      <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)}  label={"Email"}/>
+      <button onClick={submit} className="basic_btn">Submit</button>
+    </div>
+
+  )
+}
+
+
+
+const SignInForm = (setIsSignedIn) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+ // const [error, setError] = useState(false)
+
+  const auth = useAuth()
+
+
+  return (
+    <div>
+      
+        <h6><TypedMessage message={"Login"}/></h6>
+        <h6><TypedMessage message={"Please Fill Out The Information Below"}/></h6>
+        <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)}  label={"Email"}/>
+        <Field type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} label={"Password"}/>
+        <button onClick={() => auth.signin(email, password)} className="basic_btn">Login</button>
+      
+    </div>
+  )
+}
+
+
+const SignUpForm = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+    // must be at least 6 digits long
+  // const [error, setError] = useState(false)
+  const auth = useAuth()
+  return (
+    <div>
+      
+        <h6><TypedMessage message={"Create Account:"}/></h6>
+        <h6><TypedMessage message={"Please Fill Out The Information Below"}/></h6>
+        <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} label={"Email"}/>
+        <Field type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} label={"Password"}/>
+        <button onClick={() => {auth.signup(email, password)}} className="basic_btn">Create Account</button>
+      
+    </div>
+  )
+}

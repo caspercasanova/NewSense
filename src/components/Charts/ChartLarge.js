@@ -7,7 +7,7 @@ import ComingSoonOverlay from '../Elements/ComingSoonOverlay'
   const ChartLarge = () => {
     
   return(
-    <div className='chartHolder'>
+    <div className='chart_holder'>
       <div className='large_chart'></div>
       
       <ComingSoonOverlay />

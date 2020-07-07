@@ -24,7 +24,9 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "react-spring": "^8.0.27",
-    "stripe": "^8.60.0"
+    "recharts": "^1.8.5",
+    "stripe": "^8.60.0",
+    "styled-components": "^5.1.1"
   },
   "scripts": {
     "server": "nodemon server/index.js",

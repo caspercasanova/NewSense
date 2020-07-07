@@ -1,30 +1,31 @@
 import React,{useState, useEffect} from 'react';
-import Axios from 'axios'
 import './App.scss';
-
-import {firestore} from './firebase/firebase'
+import Axios from 'axios'
 
 import Body from './components/Body'
 import LandingPage from './components/LandingPage'
 
 
+import {useShoppingCart} from './components/utils' // custom hooks & functions
+
+
 import {loadStripe} from '@stripe/stripe-js' //returns a stripe key or something
 
-import {useShoppingCart, useToggle} from './components/utils' // custom hooks & functions
+import {useAuth} from './firebase/Auth'
+import {fireStore} from './firebase/firebase'
 
 
 
 
 function App() {
+
   
-  
-  const [isLoggedIn, toggleLogin] = useToggle(true) //defaults to false
+  const auth = useAuth()
+
 
 
   const shoppingCart = useShoppingCart() 
-  const [showCart, toggleShowCart] = useToggle()  //! need to complete for debugging 
-
-   
+  
   const [stripePromise, setStripePromise] = useState(null) // stripe promise return stripe key
   const [stripeProductList, setStripeProductList] = useState([]) // all products from stripe
   
@@ -48,31 +49,22 @@ function App() {
     fetchProduct()
   }, [])
 
-
-
-  useEffect(() => {
-    const fetchFireStoreData = async() => {
-      return await firestore.collection('posts')
-    }
-    let data = fetchFireStoreData()
-    console.log(data)
-  }, [])
+ 
   
 
 
-
-  return isLoggedIn ?(
+  console.log(auth.user)
+  return auth.user ?(
     <div className="App">
       <Body 
-        logoutFunction={toggleLogin} 
         stripePromise={stripePromise} 
         shoppingCart={shoppingCart}
         stripeProductList={stripeProductList}
-        />
+      />
     </div>
   ):( 
     <div className='App'>
-      <LandingPage  loginFunction={toggleLogin}/>
+      <LandingPage/>
     </div>
 
   )

@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {ProvideAuth} from './firebase/Auth'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ProvideAuth>
+      <App />
+    </ProvideAuth>
   </React.StrictMode>,
   document.getElementById('root')
 );

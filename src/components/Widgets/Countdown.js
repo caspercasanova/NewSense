@@ -2,9 +2,9 @@ import React,{useState} from 'react'
 import {useInterval} from '../utils'
 
 
-const Countdown = () => {
+const Countdown = ({date = '2020-09-11'}) => {
   const calculateTimeLeft = () => {
-    const difference = new Date('2020-09-11') - new Date();
+    const difference = new Date(date) - new Date();
     let timeLeft = {};
 
     if(difference > 0){

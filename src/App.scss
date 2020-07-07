@@ -22,7 +22,7 @@ use this
 }
 
 .body{
-  max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
 }
 
@@ -32,7 +32,6 @@ use this
   width: 100%;
   position: relative;
   display: flex;
-  flex-grow: 1;
   flex-direction: column;
   justify-content: space-between; 
   
@@ -45,28 +44,13 @@ use this
   position: relative;
   cursor: pointer;
   padding: .5em .8em;
-  background-image: linear-gradient(transparent,transparent);
   color: $bg;
   z-index: 10;
-  border-radius: .3rem;
-
-  &:before{
-    content: '';
-    @include bottom-up-gradient($bg);
-    position: absolute;
-    border-radius: inherit;
-    bottom:0;left:0;
-    height: 40%;
-    width: 100%;
-    opacity: 0;
-    transition: opacity .7s;
-    z-index: -100;
-  }
+  box-shadow: 0px 0px 0px 1px $bg;
+  
   &:hover{
-    &:before{
-      opacity: 1;
-    }
-    box-shadow:0px 0px 0px 1px $bg inset;
+    
+    box-shadow:0px 0px 0px 4px $bg inset;
   }
 }
 .basic_btn{
@@ -156,17 +140,17 @@ use this
 .Product{
   display: flex;
   flex-direction: column;
-
 }
 .product_main{
   display: flex;
+  width: 100%;
   flex-direction: row;
-
+  justify-content: space-between;
 }
+
 .product_sidebar{
   display: flex;
   flex-direction: column;
-  flex: 1.1 1 0%;
   & ul{
     padding-left: 14px;
   }
@@ -211,21 +195,12 @@ use this
   padding-bottom: 100px;
 }
 
-.mini_chart{
-  background-color: gray;
-  border: 1px solid black;
-  height: 100px;
-  width: 270px;
-}
 
 
 
-.chartHolder{
+.chart_holder{
    display: flex;
    width: 100%;
-   height: auto;
-   flex-direction: column;
-   align-items: center;
    position: relative;
 }
 .large_chart{
@@ -237,7 +212,6 @@ use this
 }
 .medium_chart{
   width: 95%;
-  height: 250px;
   background-color: gray;
   box-shadow: inset 0px 0px 1px black;
   border: 1px solid black;
@@ -487,43 +461,38 @@ use this
   background-color: rgba(0,162,253,0.15);
   border-radius: .3rem;
   padding-bottom: 10px;
-  border: 1px solid rgba(0,162,253,1);
+  
   & .TextBox_header{
     width: 100%;
-    background-color: rgba(0,162,253,0.15);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    background-color: rgba(21, 45, 59, 0.966);
+    background-image: linear-gradient(to right,rgba(13,230,255,0.15) 0%,rgba(201,189,174,0) 25%);
     display: flex;
     align-items: center;
     padding: 10px 10px 10px 10px;
+    position: relative;
+    &:before{
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 2px;
+      background-color: rgba(13,230,255,0.5);
+    }
   }
 
   & .TextBox_body{
     width: 100%;
     padding: 0px 10px 0px 10px;
-    font-family: "Jura";
   }
   
 }
 
 
 
-.Divider{
-  width: 100%;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  & h2{
-    color: $color-legendary;
-  }
 
-  & hr{
-    color: $color-legendary;
-    position: relative;
-  }
-
-}
 
 
 
@@ -534,20 +503,12 @@ use this
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+
+  padding-left: 200px;
+  padding-right: 200px;
   border: 1px solid cyan;
 }
 
-.Coming_Soon_Overlay{
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(15, 13, 13, 0.94);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid cyan;
-}
 
 
 .countdown{
@@ -637,7 +598,6 @@ use this
   bottom: 200%;
   overflow: wrap;
   left: -450%;
-
   & hr{
     color: $purple_ultra;
   }
@@ -646,8 +606,6 @@ use this
     padding-left: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
-    
-  
     position: relative;
   }
 
@@ -721,12 +679,25 @@ use this
   & .Carousel_Inner{
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: auto;
 
   }
   & .Carousel_Item{
     list-style: none;
+    cursor: pointer;
+    box-shadow: 0 0 0 1px inset $color-grey;
+    &:hover{
+      color: $color-legendary;
+      box-shadow: 0 0 0 2px inset $color-legendary;
+    }
+    padding: 4px 8px;
+    min-width: 250px;
     & .Carousel_item_body{
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
       & img{
         width: 100px;
         
@@ -810,28 +781,10 @@ use this
 
 .Statistics_Minor{
   width: 100%;
-  min-height: 250px;
+
   display: flex;
   flex-wrap: wrap;
   position: relative;
-
-  & .Minor{
-    position: relative;
-    margin-left: 10px;
-    margin-right: 10px;
-    min-width: 180px;
-    min-height: 200px;
-    box-shadow: 0 0 5px 0px rgba(128, 128, 128, .25);
-    flex: 1 1 0;
-    border-radius: $border-radius;
- 
-  }
-  & .Count{
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-  }
 }
 
 
