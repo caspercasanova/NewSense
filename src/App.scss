@@ -47,11 +47,15 @@ use this
   color: $bg;
   z-index: 10;
   box-shadow: 0px 0px 0px 1px $bg;
-  
+  transition: .2s ease-in;
   &:hover{
-    
+    filter: drop-shadow(0 0 0.25em $bg);
     box-shadow:0px 0px 0px 4px $bg inset;
   }
+  &:active {
+    background: darken($bg, 20%);
+  }
+
 }
 .basic_btn{
  @include btn($color-highlight) 
@@ -741,14 +745,24 @@ use this
 }
 
 
-@mixin Fields($bg){
+@mixin Inputs($bg){
   padding: 0px 0px 10px 0px;
   border: none;
   border-left: 1px solid $bg;
   border-bottom: 1px solid $bg;
   color: $bg;
-  font-size: 20px;
-  letter-spacing: .5em;
+  font-size: 16px;
+  padding-left: .3em;
+  letter-spacing: .3em;
+  transition: 0.5s;
+  &:invalid{
+    border: none;
+    border-left: 1px solid $red_alert;
+    border-bottom: 1px solid $red_alert;
+  }
+  &:active{
+    filter: drop-shadow(0 0 1em $bg);
+  }
 }
 
 // Underlined text
@@ -758,23 +772,28 @@ use this
   display: block;
   padding: 0.5em;
   transition: 0.5s;
-  top: 0%;
-  left: 0%;
   cursor: inherit;
+  top: -80%;
 }
 
 .Field {
   position: relative;
-  margin-top: 40px;
+  margin-top: 25px;
+  margin-bottom: 10px;
 
-  & .FieldInput:focus + label, .FieldInput:valid + label {
-      top: -70%;
-  }
   & .FieldLabel{
     @include labels($purple_ultra)
   } 
+  & .ErrorLabel{
+    @include labels($red_alert);
+    
+    top: -80%;
+    right: 1%;
+    
+  } 
   & .FieldInput{
-    @include Fields($purple_ultra);
+    @include Inputs($purple_ultra);
+    left: 0%;
   }
 }
 

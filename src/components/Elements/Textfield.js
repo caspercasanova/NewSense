@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 
 const ArticleContainer = styled.div`
-width: 36em;
+width: 26em;
 max-width: 100%;
 line-height: 1.5;
 font-size: 15px;

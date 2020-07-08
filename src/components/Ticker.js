@@ -24,7 +24,7 @@ export default function Ticker() {
 
 
   const tickerbarData = useCollection('tickerbar')
-  console.log(tickerbarData)
+  //console.log(tickerbarData)
   // add phrase to the phrases array
   const addNewPhrase = () => {
     let newArray = phrases.slice(1)

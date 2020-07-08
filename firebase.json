@@ -19,6 +19,9 @@
       {
         "source": "**",
         "destination": "/index.html"
+      },{
+        "source": "/",
+        "funciton": "app"
       }
     ]
   },

@@ -12,9 +12,11 @@ import {useShoppingCart} from './components/utils' // custom hooks & functions
 import {loadStripe} from '@stripe/stripe-js' //returns a stripe key or something
 
 import {useAuth} from './firebase/Auth'
-import {fireStore} from './firebase/firebase'
+//import {fireStore} from './firebase/firebase'
 
 
+
+import Theme from './styles/Theme'
 
 
 function App() {
@@ -55,17 +57,21 @@ function App() {
 
   console.log(auth.user)
   return auth.user ?(
-    <div className="App">
-      <Body 
-        stripePromise={stripePromise} 
-        shoppingCart={shoppingCart}
-        stripeProductList={stripeProductList}
-      />
-    </div>
+    <Theme>
+      <div className="App">
+        <Body 
+          stripePromise={stripePromise} 
+          shoppingCart={shoppingCart}
+          stripeProductList={stripeProductList}
+        />
+      </div>
+    </Theme>
   ):( 
-    <div className='App'>
-      <LandingPage/>
-    </div>
+    <Theme>
+      <div className='App'>
+        <LandingPage/>
+      </div>
+    </Theme>
 
   )
 }

@@ -3,7 +3,7 @@
 
 
 import React, {useState, useEffect, useContext, createContext} from 'react'
-import {auth} from './firebase'
+import firebase,{auth, firestore} from './firebase'
 
 const authContext = createContext()
 
@@ -32,19 +32,25 @@ function useProvideAuth() {
   const signin = (email, password) => {
     return auth
       .signInWithEmailAndPassword(email, password)
-      .then(response => {
-        setUser(response.user);
-        return response.user;
-      });
+      // this is redundant because we are already subscribed
+      // .then(response => {
+      //   setUser(response.user);
+      //   return response.user;
+      // });
   };
 
   const signup = (email, password) => {
     return auth
       .createUserWithEmailAndPassword(email, password)
       .then(response => {
-        console.log(response)
-        setUser(response.user);
-        return response.user;
+         
+        //console.log(response)
+        return firestore.collection('users').doc(response.user.uid).set({
+          street_cred: 0,
+          bio: '',
+          display_name: '',
+          age: 0,
+        })
       })
       .catch((err) => {
         console.error(err)
@@ -75,6 +81,11 @@ function useProvideAuth() {
       });
   };
 
+  const signInWithGoogle = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
+    return auth.signInWithPopup(provider)
+  }
+
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
@@ -99,6 +110,7 @@ function useProvideAuth() {
     signin,
     signup,
     signout,
+    signInWithGoogle,
     sendPasswordResetEmail,
     confirmPasswordReset
   };

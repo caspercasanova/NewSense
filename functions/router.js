@@ -1,7 +1,9 @@
 const functions = require('firebase-functions');
+
+
 const router = require("express").Router()
 
-// stripe 
+// initialize stripe
 const stripe = require('stripe')(functions.config().stripe.secret_key) 
 
 

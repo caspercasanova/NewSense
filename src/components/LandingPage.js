@@ -3,13 +3,18 @@ import {useToggle} from './utils'
 import Countdown from './Widgets/Countdown'
 import Field from '../components/Elements/Field'
 import TypedMessage from './Widgets/TypedMessage'
-import {signInWithGoogle} from '../firebase/firebase'
+
 import NSAlogo from '../NSAbrainDaggertrans.png'
 import {useAuth} from '../firebase/Auth'
 
 import TextField from './Elements/Textfield'
+import styled from 'styled-components'
 
 
+const FormContainer = styled.form` 
+  margin-top: 10px;
+  margin-bottom: 10px;
+`; 
 
 
 
@@ -17,7 +22,7 @@ import TextField from './Elements/Textfield'
 
 export default function LandingPage({loginFunction}) {
   const [isSignedIn, setIsSignedIn] = useToggle(true) //toggles forms
-
+  
   return (
     <div  className='Landing_Page'>
       <div>
@@ -57,16 +62,16 @@ const LoginBox = (setIsSignedIn) => {
   const [login, toggleLogin] = useToggle(true)
   const [resetPassword, toggleResetPassword] = useToggle()
 
-
+  const auth = useAuth()
   return(
     <div>
       { resetPassword 
         ? <ResetPassword toggleResetPassword={toggleResetPassword} /> 
         : 
         <>
-          <div>
-            <button onClick={()=> toggleLogin(true)} className="basic_btn ">Sign In</button>
-            <button onClick={() => toggleLogin(false)} className="basic_btn">Sign Up</button>
+          <div style={{width: '100%', display: 'flex',}}>
+            <button style={{width: '100%'}} onClick={()=> toggleLogin(true)} className="basic_btn ">Sign In</button>
+            <button style={{width: '100%'}} onClick={() => toggleLogin(false)} className="basic_btn">Sign Up</button>
           </div>
 
           { login 
@@ -74,7 +79,7 @@ const LoginBox = (setIsSignedIn) => {
             : <SignUpForm /> 
           }
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            <button className="basic_btn" onClick={signInWithGoogle}>Sign In With Google</button>
+            <button className="basic_btn" onClick={auth.signInWithGoogle}>Sign In With Google</button>
             <button onClick={toggleResetPassword} className="basic_btn">Reset Password</button>
           </div>
         </>
@@ -85,16 +90,20 @@ const LoginBox = (setIsSignedIn) => {
 
 const ResetPassword = ({toggleResetPassword}) => {
   const [email, setEmail] = useState('')
-  const submit = () => {}
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    //! Test this functionality soon!
+  }
   return(
-    <div>
-      <button onClick={toggleResetPassword} className="basic_btn">Back</button>
-      <h6><TypedMessage message={"Reset Password:"}/></h6>
-      <h6><TypedMessage message={"Please Enter Your Email Address"}/></h6>
-      <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)}  label={"Email"}/>
-      <button onClick={submit} className="basic_btn">Submit</button>
-    </div>
-
+    <FormContainer onSubmit={handleSubmit}>
+    
+        <button onClick={toggleResetPassword} className="basic_btn">Back</button>
+        <h6><TypedMessage message={"Reset Password:"}/></h6>
+        <h6><TypedMessage message={"Please Enter Your Email Address"}/></h6>
+        <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)}  label={"Email"}/>
+        <button type="submit" className="basic_btn">Submit</button>
+    
+    </FormContainer>
   )
 }
 
@@ -107,17 +116,21 @@ const SignInForm = (setIsSignedIn) => {
 
   const auth = useAuth()
 
+  const submitHandler = (event) => {
+    event.preventDefault()
+    auth.signin(email, password)
+  }
 
   return (
-    <div>
-      
-        <h6><TypedMessage message={"Login"}/></h6>
-        <h6><TypedMessage message={"Please Fill Out The Information Below"}/></h6>
-        <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)}  label={"Email"}/>
-        <Field type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} label={"Password"}/>
-        <button onClick={() => auth.signin(email, password)} className="basic_btn">Login</button>
-      
-    </div>
+  <FormContainer onSubmit={submitHandler}>
+  
+    <h6><TypedMessage message={"Login"}/></h6>
+    <h6><TypedMessage message={"Please Fill Out The Information Below"}/></h6>
+    <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)}  label={"Email"}/>
+    <Field type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} label={"Password"}/>
+    <button type="submit" className="basic_btn">Login</button>
+
+  </FormContainer>
   )
 }
 
@@ -128,15 +141,19 @@ const SignUpForm = () => {
     // must be at least 6 digits long
   // const [error, setError] = useState(false)
   const auth = useAuth()
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    auth.signup(email, password)
+  }
   return (
-    <div>
-      
-        <h6><TypedMessage message={"Create Account:"}/></h6>
-        <h6><TypedMessage message={"Please Fill Out The Information Below"}/></h6>
-        <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} label={"Email"}/>
-        <Field type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} label={"Password"}/>
-        <button onClick={() => {auth.signup(email, password)}} className="basic_btn">Create Account</button>
-      
-    </div>
+  <FormContainer onSubmit={handleSubmit}>
+    
+    <h6><TypedMessage message={"Create Account:"}/></h6>
+    <h6><TypedMessage message={"Please Fill Out The Information Below"}/></h6>
+    <Field type={'email'} value={email} onChange={(e) => setEmail(e.target.value)} label={"Email"}/>
+    <Field type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} label={"Password"}/>
+    <button type="submit" className="basic_btn">Create Account</button>
+  
+  </FormContainer>
   )
 }

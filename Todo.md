@@ -2,6 +2,11 @@
 ### New Sense Active Development
 --- 
 ### Resources
+      -https://www.sanity.io/docs/overview-introduction
+            -This website has some concepts I knew would be cool features
+            -Including a systems check
+      -https://openbase.io/
+            -Mad Charts and cool style
       - https://www.geckoboard.com/blog/saas-metrics-vcs-share-key-metrics-track/
       - https://www.robinwieruch.de/complete-firebase-authentication-react-tutorial
       - https://dev.to/shiftyp/react-hooks-snippet-shopping-cart-12lb
@@ -161,4 +166,7 @@
 
       "Frontloading", a concept, practice and art. Frontloading leads you to places you wouldn't have found. Essentially the result of frontloading technology/features is that you fall upon new perspectives more often. Sound could prove to be an integral aspect to the app. 
 
-      
+## 7/8/2020: Applying to Jobs While Developing
+      Shit sucks hahahaha plus still cant figure out this fucking Firebase Shit. W/e I like having my developement split betwen crafting Backend things and front end design features. I am probably lucky to be able to be doing both. 
+
+      Can't wait to add sounds this weekend. 
