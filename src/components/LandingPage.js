@@ -7,7 +7,6 @@ import TypedMessage from './Widgets/TypedMessage'
 import NSAlogo from '../NSAbrainDaggertrans.png'
 import {useAuth} from '../firebase/Auth'
 
-import TextField from './Elements/Textfield'
 import styled from 'styled-components'
 
 
@@ -16,7 +15,7 @@ const FormContainer = styled.form`
   margin-bottom: 10px;
 `; 
 
-
+ 
 
 
 
@@ -25,21 +24,26 @@ export default function LandingPage({loginFunction}) {
   
   return (
     <div  className='Landing_Page'>
-      <div>
-        <div><img style={{width: '50px'}} src={NSAlogo} alt='logo'/></div> 
-      </div>
+    
+        <div style={{display: 'flex', flexDirection: 'column', flex: '1 1 0', }}>
 
-      <div style={{display: "flex", justifyContent:'space-between'}}>
-        <div> 
-          <h1 className='blink_soft'> <TypedMessage message={"New Sense Active"}/></h1>
-          
-          {isSignedIn 
-            ? <LoginBox setIsSignedIn={setIsSignedIn}/>
-            : <button onClick={loginFunction} className="basic_btn blink_soft">Enter</button>
-          }
+          <div style={{display: 'flex', margin: 'auto auto'}}> 
+            <div><img style={{width: '50px'}} src={NSAlogo} alt='logo'/></div>
+    
+            <div style={{width: '22em'}}>
+              <h1 className='blink_soft'> <TypedMessage message={"New Sense Active"}/></h1>
+              {isSignedIn 
+                ? <LoginBox setIsSignedIn={setIsSignedIn}/>
+                : <button onClick={loginFunction} className="basic_btn blink_soft">Enter</button>
+              }
+            </div> 
+        
+          </div>
         </div>
-        <div >
-          <TextField>
+
+
+        <div style={{display: 'flex', flexDirection: 'column', flex: '1.5 1 0'}}>
+          <div style={{width: '22em', margin: 'auto auto'}}>
             <h2>Sorry for the inconvienence</h2>
             <p>N.S.A. is currently undergoing a major code refactor.</p>
             <p>The development team is currently working on the following:</p>
@@ -48,9 +52,9 @@ export default function LandingPage({loginFunction}) {
             <hr></hr>
             <p>Estimated Time Until We Are Back Up And Properly Running</p>
             <Countdown  date={'2020-07-13'}/>
-          </TextField>
+          </div>
         </div>
-      </div>
+    
     </div>
   )
 }

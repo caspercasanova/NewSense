@@ -18,7 +18,6 @@
 
 
 html{
-  
   width: 100%;
   height: 100%;
 }
@@ -65,18 +64,7 @@ textarea {
 fieldset{
   border: none;
 }
-header{
-  width: 100%;
-  border-top: 1px solid $color-highlight;
-  border-left: 1px solid $color-highlight;
-  border-right: 1px solid $color-highlight;
-  border-bottom: 1px solid $color-highlight;
-  border-radius: $border-radius;
-  padding: 10px 10px 10px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 nav{
   display: flex;
@@ -88,20 +76,6 @@ h1,h2,h3,h4,h5,h6{
 }
 
 
-
-footer{
-  border-bottom: 1px solid $color-highlight;
-  border-left: 1px solid $color-highlight;
-  border-right: 1px solid $color-highlight;
-  border-top: 1px solid $color-highlight;
-  border-radius: $border-radius;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin-top: 10px;
-  padding: 10px 10px 10px 10px;
-}
 
 
 
