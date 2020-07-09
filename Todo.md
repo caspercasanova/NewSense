@@ -170,3 +170,7 @@
       Shit sucks hahahaha plus still cant figure out this fucking Firebase Shit. W/e I like having my developement split betwen crafting Backend things and front end design features. I am probably lucky to be able to be doing both. 
 
       Can't wait to add sounds this weekend. 
+
+## 7/9/2020: Possible Ways Of Testing Launch?
+      -I should think about how this app will be launched. I need random people testing it. Like interview cake but for programs
+      

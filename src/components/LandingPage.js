@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import {useToggle} from './utils'
 import Countdown from './Widgets/Countdown'
 import Field from '../components/Elements/Field'
-import TypedMessage from './Widgets/TypedMessage'
+import TypedMessage from './Elements/TypedMessage'
 
 import NSAlogo from '../NSAbrainDaggertrans.png'
 import {useAuth} from '../firebase/Auth'

@@ -7,7 +7,7 @@ import ChartLarge from './Charts/ChartLarge.js'
 import Statistics from './Statistics'
 import Carousel from './Elements/Carousel'
 
-import TypedMessage from './Widgets/TypedMessage.js'
+import TypedMessage from './Elements/TypedMessage.js'
 import { useToggle } from './utils.js'
 
 
@@ -51,20 +51,20 @@ const ProductsCarousel = ({stripeProductList, setStripeProductIndex}) => {
 }
 
 const ProductCarouselCard = ({product, handler}) => {
-  const [isShown, setIsShown] = useToggle();
+  const [show, toggleShow] = useToggle();
   return(
     <li 
     onClick={handler}
-    onMouseEnter={setIsShown}
-    onMouseLeave={setIsShown}
+    onMouseEnter={toggleShow}
+    onMouseLeave={toggleShow}
     className='Carousel_Item'>
-      <div>{isShown ? <TypedMessage message={`${product.name}`}/> : <p className='blink_soft'>N.S.A.</p>}</div>
+      <div>{show ? <TypedMessage message={`${product.name}`}/> : <p className='blink_soft'>N.S.A.</p>}</div>
       <div className='Carousel_item_body'>
         <picture  className='Carousel_Picture' >
           <source srcSet={product.images[0]} media="(min-width: 1024px)"/>
           <img src={product.images[0]} alt='carousel_image'/>
         </picture>
-        <div>{isShown && <TypedMessage message={`$ ${(product.price.unit_amount / 100).toFixed(2)}`}/>}</div>
+        <div>{show && <TypedMessage message={`$ ${(product.price.unit_amount / 100).toFixed(2)}`}/>}</div>
       </div>
     </li>
   )

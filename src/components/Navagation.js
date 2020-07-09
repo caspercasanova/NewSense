@@ -1,8 +1,8 @@
 import React from 'react'
 
-import {useToggle} from './utils'
+//import {useToggle} from './utils'
 import {useAuth} from '../firebase/Auth'
-import TypedMessage from './Widgets/TypedMessage'
+import TypedMessage from './Elements/TypedMessage'
 import NSAlogo from '../NSAbrainDaggertrans.png'
 import Countdown from './Widgets/Countdown'
 import Ticker from './Widgets/Ticker'

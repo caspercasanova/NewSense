@@ -42,7 +42,7 @@ export default function Body({stripePromise, shoppingCart, stripeProductList}) {
           display: 'flex', 
           flexDirection: 'column', 
           flex: '1.5 1 0', 
-          overflowY: 'scroll', 
+          overflowY: 'auto', 
           scrollbarColor: 'rgba(111,111,111,0.5) black',
           paddingRight: '25px',
           }}>
