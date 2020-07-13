@@ -1,27 +1,27 @@
 // https://dev.to/bmcmahen/using-firebase-with-react-hooks-21ap
 // https://usehooks.com/useAuth/
 
+import React, {
+  useState, useEffect, useContext, createContext,
+} from 'react';
+import firebase, { firestore } from './firebase';
 
-import React, {useState, useEffect, useContext, createContext} from 'react'
-import firebase,{auth, firestore} from './firebase'
+const auth = firebase.auth();
 
-const authContext = createContext()
+const authContext = createContext();
 
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
-export function ProvideAuth({children}){
-  const auth = useProvideAuth();
-  return <authContext.Provider value={auth}>{children}</authContext.Provider>
+export function ProvideAuth({ children }) {
+  const authObj = useProvideAuth();
+  return <authContext.Provider value={authObj}>{children}</authContext.Provider>;
 }
-
-
 
 // Hook for child components to get the auth object ...
 // ... and re-render when it changes.
 export const useAuth = () => {
   return useContext(authContext);
 };
-
 
 
 // Provider hook that creates auth object and handles state
@@ -31,29 +31,23 @@ function useProvideAuth() {
   // ... to save the user to state.
   const signin = (email, password) => {
     return auth
-      .signInWithEmailAndPassword(email, password)
-      // this is redundant because we are already subscribed
-      // .then(response => {
-      //   setUser(response.user);
-      //   return response.user;
-      // });
+      .signInWithEmailAndPassword(email, password);
   };
 
   const signup = (email, password) => {
     return auth
       .createUserWithEmailAndPassword(email, password)
-      .then(response => {
-         
-        //console.log(response)
+      .then((response) => {
+        // console.log(response)
         return firestore.collection('users').doc(response.user.uid).set({
           street_cred: 0,
           bio: '',
           display_name: '',
           age: 0,
-        })
+        });
       })
       .catch((err) => {
-        console.error(err)
+        console.error(err);
       });
   };
 
@@ -65,7 +59,7 @@ function useProvideAuth() {
       });
   };
 
-  const sendPasswordResetEmail = email => {
+  const sendPasswordResetEmail = (email) => {
     return auth
       .sendPasswordResetEmail(email)
       .then(() => {
@@ -82,16 +76,16 @@ function useProvideAuth() {
   };
 
   const signInWithGoogle = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    return auth.signInWithPopup(provider)
-  }
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return auth.signInWithPopup(provider);
+  };
 
   // Subscribe to user on mount
   // Because this sets state in the callback it will cause any ...
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
       } else {
@@ -103,7 +97,6 @@ function useProvideAuth() {
     return () => unsubscribe();
   }, []);
 
-  
   // Return the user object and auth methods
   return {
     user,
@@ -112,6 +105,6 @@ function useProvideAuth() {
     signout,
     signInWithGoogle,
     sendPasswordResetEmail,
-    confirmPasswordReset
+    confirmPasswordReset,
   };
 }

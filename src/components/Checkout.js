@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
-
+//Stripe Imports
 import {Elements} from '@stripe/react-stripe-js'
+//Element
 import CheckoutForm from './CheckoutForm.js'
 
 

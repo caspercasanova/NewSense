@@ -1,8 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import "firebase/analytics";
-import 'firebase/auth'
-
+import 'firebase/analytics';
+import 'firebase/auth';
 
 // Initialize Firebase and add to window
 firebase.initializeApp({
@@ -15,23 +14,13 @@ firebase.initializeApp({
   appId: "1:1068564898932:web:279415f9e07f8e637f9d21",
   measurementId: "G-146XQDGJDE"
 });
-if(process.env.NODE_ENV === 'development'){
-  window.firebase = firebase
+
+if (process.env.NODE_ENV === 'development') {
+  window.firebase = firebase;
 }
-
-
 
 export default firebase;
 
 export const analytics = firebase.analytics();
 
 export const firestore = firebase.firestore();
-
-export const auth = firebase.auth();
-
-
-
-
-
-
-

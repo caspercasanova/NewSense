@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+//Pages
 import ProductPage from './ProductPage';
 import Modal from './Elements/Modal';
 import About from '../Pages/About/About';
@@ -6,9 +7,11 @@ import Navagation from '../Pages/Navagation/Navagation';
 import Checkout from './Checkout';
 import Profile from '../Pages/Profile/Profile';
 import Cart from './Cart';
-import { useToggle } from './utils';
+//Elements
 import Tooltip from './Elements/Tooltip';
 import Highlight from './Elements/Highlight';
+//Functions
+import { useToggle } from './utils';
 
 export default function Body({ stripePromise, shoppingCart, stripeProductList }) {
   const [checkout, toggleCheckout] = useToggle(); // initiate the checkoutProcess
