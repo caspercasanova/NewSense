@@ -32,6 +32,9 @@ export default function Statistics() {
           <MediumChartCard title={'Number of Sales'}>
             <AreaChartContainer />
           </MediumChartCard>
+          <MediumChartCard title={'Current Stock VS Price'}>
+            <AreaChartContainer />
+          </MediumChartCard>
           <MediumChartCard title={'Impressions'}>
             <AreaChartContainer />
           </MediumChartCard>

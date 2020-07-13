@@ -15,23 +15,28 @@ const FormContainer = styled.form`
   margin-bottom: 10px;
 `; 
 
+ /* 
+ !TODO ADD A PREVIOUS UPDATES
  
+ */
 
 
-
-export default function LandingPage({loginFunction}) {
-  const [isSignedIn, setIsSignedIn] = useToggle(true) //toggles forms
+  
+  export default function LandingPage({loginFunction}) {
+    const [isSignedIn, setIsSignedIn] = useToggle(true) //toggles forms
+    const [hovered, toggleHovered] = useToggle()
   
   return (
     <div  className='Landing_Page'>
     
         <div style={{display: 'flex', flexDirection: 'column', flex: '1 1 0', }}>
 
-          <div style={{display: 'flex', margin: 'auto auto'}}> 
-            <div><img style={{width: '50px'}} src={NSAlogo} alt='logo'/></div>
-    
+          <div style={{display: 'flex', flexDirection: 'column', margin: 'auto auto'}}> 
+            <div onMouseOver={toggleHovered} onMouseOut={toggleHovered}><img style={{width: '50px'}} src={NSAlogo} alt='logo'/></div>
+            {!hovered && <h1 className='blink_soft'> <TypedMessage message={"New Sense Active"}/></h1>}
+            {hovered && <h1 className='blink_soft'> <TypedMessage message={"All Be Demanded"}/></h1>}
+            
             <div style={{width: '22em'}}>
-              <h1 className='blink_soft'> <TypedMessage message={"New Sense Active"}/></h1>
               {isSignedIn 
                 ? <LoginBox setIsSignedIn={setIsSignedIn}/>
                 : <button onClick={loginFunction} className="basic_btn blink_soft">Enter</button>

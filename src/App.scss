@@ -30,7 +30,6 @@ use this
   display: flex;
   border: 1px solid cyan;
   overflow: hidden;
-  padding-left: 50px;
   padding-right: 25px;
 }
 
@@ -365,6 +364,7 @@ use this
   top: 0;
   z-index: 0;
 }
+
 .glow_corner{
   transition: .3s;
   position: absolute;

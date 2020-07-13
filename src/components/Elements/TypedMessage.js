@@ -36,7 +36,7 @@ const TypedMessage = ({message}) => {
   });
 
   return(
-    <div  className="DialogMessage">
+    <div className="DialogMessage">
       {transitions.map(({ item, props, key }) => {
         return (
           <animated.span  key={key} style={props}>

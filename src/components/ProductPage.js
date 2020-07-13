@@ -11,6 +11,15 @@ import TypedMessage from './Elements/TypedMessage.js'
 import { useToggle } from './utils.js'
 
 
+
+
+
+/* 
+TODO! ADD LITTLE BONUS CHARACTERISTICS FOR EACH PRODUCT :P META DATA LIKE OPENBASE.io
+
+
+*/
+
 export default function ProductPage({stripeProduct, shoppingCart, toggleCheckout, stripeProductList, setStripeProductIndex}) {
   
   return (

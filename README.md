@@ -13,3 +13,8 @@ If you are interested in chatting, please contact me through linkedIn or some ot
 I am available for hire and am looking work with others! :) 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and deployed with Google Firebase Cloud Solutions. Stripe's Payment Processing API was also integrated and plans for future third party integrations are in the works. 
+
+To run the app, 
+  -It wont work because you need some special API keys. Perhaps I could configure for customization? -I will look into this. 
+  -In your terminal "NPM START"
+  -open a new terminal and run "NPM run server" 

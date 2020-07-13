@@ -6,10 +6,10 @@ import React,{useState} from 'react'
 import ProductPage from './ProductPage'
 
 import Modal from './Elements/Modal'
-import About from './About'
-import Navagation from './Navagation'
+import About from '../Pages/About/About'
+import Navagation from '../Pages/Navagation/Navagation'
 import Checkout from './Checkout' 
-import Profile from './Profile'
+import Profile from '../Pages/Profile/Profile'
 import Cart from './Cart'
 
 import {useToggle} from './utils'
@@ -31,7 +31,7 @@ export default function Body({stripePromise, shoppingCart, stripeProductList}) {
   return (
 
     <div className='Landing_Page'>
-      <div style={{display: 'flex', flexDirection: 'column', flex: '1 1 0', }}>
+      <div style={{display: 'flex', flexDirection: 'column', flex: '1 1 0', paddingRight: '10px',}}>
         <Navagation toggleShoppingCart={toggleShoppingCart} toggleCheckout={toggleCheckout} setPage={setPage}/>
       </div>
     
@@ -41,10 +41,10 @@ export default function Body({stripePromise, shoppingCart, stripeProductList}) {
         style={{
           display: 'flex', 
           flexDirection: 'column', 
-          flex: '1.5 1 0', 
+          flex: '2 1 0', 
           overflowY: 'auto', 
           scrollbarColor: 'rgba(111,111,111,0.5) black',
-          paddingRight: '25px',
+          paddingRight: '15px',
           }}>
         {page === 'product_page' 
           && <ProductPage 
