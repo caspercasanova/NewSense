@@ -4,7 +4,7 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { ProvideAuth } from './firebase/Auth';
+import { ProvideAuth } from './Firebase/Auth';
 
 ReactDOM.render(
   <React.StrictMode>

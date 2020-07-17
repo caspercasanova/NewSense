@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import './App.scss';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 // Pages
 import { loadStripe } from '@stripe/stripe-js'; // returns a stripe key or something
 import Body from './components/Body';
 import LandingPage from './components/LandingPage';
 // Functions
-import { useShoppingCart } from './components/utils'; // custom hooks & functions
-import { useAuth } from './firebase/Auth';
+import useShoppingCart from './Utilities/useShoppingCart'; 
+import { useAuth } from './Firebase/Auth';
 // import {fireStore} from './firebase/firebase'
 import Theme from './styles/Theme';
 

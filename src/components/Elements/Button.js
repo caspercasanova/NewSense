@@ -49,10 +49,10 @@ const handleColor = (color) => {
 // `;
 
 
-const Button = () => {}
+const Button = ({type}) => {
+  return (
+    <button type={`${type}`} >Something</button>
+  );
+};
 
-
-
-export default Button
-
-
+export default Button;

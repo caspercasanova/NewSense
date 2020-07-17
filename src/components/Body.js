@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-//Pages
-import ProductPage from './ProductPage';
+// Pages
+import ProductPage from '../Pages/ProductPage/ProductPage';
 import Modal from './Elements/Modal';
 import About from '../Pages/About/About';
 import Navagation from '../Pages/Navagation/Navagation';
 import Checkout from './Checkout';
 import Profile from '../Pages/Profile/Profile';
 import Cart from './Cart';
-//Elements
+// Elements
 import Tooltip from './Elements/Tooltip';
 import Highlight from './Elements/Highlight';
-//Functions
-import { useToggle } from './utils';
+// Functions
+import { useToggle } from '../Utilities/utils';
 
 export default function Body({ stripePromise, shoppingCart, stripeProductList }) {
   const [checkout, toggleCheckout] = useToggle(); // initiate the checkoutProcess

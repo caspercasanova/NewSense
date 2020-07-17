@@ -1,13 +1,10 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
 
-import Divider from './Elements/Divider'
-
-import AreaChartContainer from './Charts/AreaChartContainer.js'
-
-import styled from 'styled-components'
-import PieChartContainer from './Charts/PieChartContainer';
-import ScatterChartContainer from './Charts/ScatterChartContainer';
-
+import Divider from '../../components/Elements/Divider';
+import AreaChartContainer from '../../components/Charts/AreaChartContainer';
+import PieChartContainer from '../../components/Charts/PieChartContainer';
+import ScatterChartContainer from '../../components/Charts/ScatterChartContainer';
 
 const StatisticsContainer = styled.div`
   position: relative;
@@ -21,47 +18,38 @@ const StatisticsBodyFlex = styled.div`
   justify-content: space-evenly;
 `;
 
-
-
 export default function Statistics() {
   return (
     <>
-      <Divider title={"Statistics"}/>
+      <Divider title="Statistics" />
       <StatisticsContainer>
         <StatisticsBodyFlex>
-          <MediumChartCard title={'Number of Sales'}>
+          <MediumChartCard title="Number of Sales">
             <AreaChartContainer />
           </MediumChartCard>
-          <MediumChartCard title={'Current Stock VS Price'}>
+          <MediumChartCard title="Current Stock VS Price">
             <AreaChartContainer />
           </MediumChartCard>
-          <MediumChartCard title={'Impressions'}>
+          <MediumChartCard title="Impressions">
             <AreaChartContainer />
           </MediumChartCard>
-          <MediumChartCard title={'$$$ Revenue Generated'}>
+          <MediumChartCard title="$$$ Revenue Generated">
             <AreaChartContainer />
           </MediumChartCard>
         </StatisticsBodyFlex>
         <StatisticsBodyFlex>
-          <LargeChartCard title={`Demographics`}>
+          <LargeChartCard title="Demographics">
             <ScatterChartContainer />
           </LargeChartCard>
-          <LargeChartCard title={`Portion of NSA's Revenue`}>
+          <LargeChartCard title={'Portion of NSA\'s Revenue'}>
             <PieChartContainer />
           </LargeChartCard>
         </StatisticsBodyFlex>
 
       </StatisticsContainer>
     </>
-  )
+  );
 }
-
-
-
-
-
-
-
 
 const ChartCardHeader = styled.div`
   background-image: linear-gradient(to right,rgba(13,230,255,0.15) 0%,rgba(201,189,174,0) 25%);
@@ -92,11 +80,9 @@ const MediumChartCardContainer = styled.div`
   min-width: 400px;
 `;
 
-
 const LargeChartCardContainer = styled(MediumChartCardContainer)`
   min-width: 500px;
 `;
-
 
 const MediumChartCard = ({children, title}) => {
   return (
@@ -104,15 +90,14 @@ const MediumChartCard = ({children, title}) => {
       <ChartCardHeader>{title}</ChartCardHeader>
       <ChartCardBody>{children}</ChartCardBody>
     </MediumChartCardContainer>
-  )
-}
+  );
+};
 
 const LargeChartCard = ({children, title}) => {
-  return(
+  return (
     <LargeChartCardContainer>
       <ChartCardHeader>{title}</ChartCardHeader>
       <ChartCardBody>{children}</ChartCardBody>
     </LargeChartCardContainer>
-  )
-}
-
+  );
+};

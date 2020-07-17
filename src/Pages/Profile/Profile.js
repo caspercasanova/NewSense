@@ -1,5 +1,5 @@
 import React from 'react'
-import {useAuth} from '../../firebase/Auth'
+import {useAuth} from '../../Firebase/Auth'
 import NSAlogo from '../../NSAbrainDaggertrans.png'
 import Divider from '../../components/Elements/Divider'
 import Rewards from './Rewards'

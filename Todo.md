@@ -25,6 +25,7 @@
       - Overreacted blog by dan Abramov
       - Robin Wieruch
       - Amellia wattenberger blog
+      - https://www.robinwieruch.de/firebase-test
 ---
 > ## **TODOS** 
 --- 
@@ -172,5 +173,17 @@
       Can't wait to add sounds this weekend. 
 
 ## 7/9/2020: Possible Ways Of Testing Launch?
-      -I should think about how this app will be launched. I need random people testing it. Like interview cake but for programs
-      
+      - I should think about how this app will be launched. I need random people testing it. Like interview cake but for programs
+## 7/16/2020: Coming back after a couple days away.
+      - Applying to jobs===rejections. But its cool. Things I need to integrate as developement continues. 
+            - Testing with jest. 
+                  -Connecting to the database
+                  -Stripe interactions
+            - Error Handling on the front end. Mainly form actions. 
+            - Stripe Webhook and storage of orders within firestore
+            - More methods on data/analytics
+                  - User accounts / Adjusting
+                    - Rewards Status 
+                    - Purchase history
+            - Sounds
+            - New Method of handling ToDos

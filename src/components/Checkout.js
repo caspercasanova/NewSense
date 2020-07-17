@@ -1,21 +1,15 @@
-import React,{useState} from 'react'
-//Stripe Imports
-import {Elements} from '@stripe/react-stripe-js'
-//Element
-import CheckoutForm from './CheckoutForm.js'
+import React,{useState} from 'react';
+// Stripe Imports
+import {Elements} from '@stripe/react-stripe-js';
+// Element
+import CheckoutForm from './CheckoutForm';
 
-
-
-import Cart from './Cart'
-
+import Cart from './Cart';
 
 export default function Checkout({shoppingCart, stripeProductList, stripePromise}) {
-  let [stage, setStage] = useState(0)
+  let [stage, setStage] = useState(0);
 
-
-  
-
-let ConfirmCart = () =>  (
+  const ConfirmCart = () => (
     <div>
       <div>
         Please Confirm Your Cart
@@ -24,19 +18,16 @@ let ConfirmCart = () =>  (
         <Cart confirmOrder={()=>setStage(stage += 1)} shoppingCart={shoppingCart} stripeProductList={stripeProductList}/>
       </div>
     </div>
-  )
-
+  );
 
   return (
     <div>
       {stage === 0 && <ConfirmCart />}
-      {stage === 1 && 
-             
+      {stage === 1 && (
       <Elements stripe={stripePromise}>
-            <CheckoutForm shoppingCart={shoppingCart} />
-      </Elements> 
-    }
+        <CheckoutForm shoppingCart={shoppingCart} />
+      </Elements>
+      )}
     </div>
-  )
+  );
 }
-

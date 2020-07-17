@@ -1,50 +1,46 @@
-import React,{useState} from 'react'
-import {useInterval} from '../utils'
+import React,{ useState} from 'react';
+import { useInterval } from '../../Utilities/utils';
 
-
-const Countdown = ({date = '2020-09-11'}) => {
+const Countdown = ({ date = '2020-09-11' }) => {
   const calculateTimeLeft = () => {
     const difference = new Date(date) - new Date();
     let timeLeft = {};
 
-    if(difference > 0){
+    if (difference > 0) {
       timeLeft = {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
         minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60) 
-      }
+        seconds: Math.floor((difference / 1000) % 60),
+      };
     }
     return timeLeft;
-  }
+  };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-  useInterval(()=>{
-    setTimeLeft(calculateTimeLeft())
-  }, 1000)
+  useInterval(() => {
+    setTimeLeft(calculateTimeLeft());
+  }, 1000);
 
-
-  const timerComponents = []
-
+  const timerComponents = [];
   Object.keys(timeLeft).forEach((interval, index) => {
-
     timerComponents.push(
-      <div key={index} className='interval'>
+      <div key={index} className="interval">
         <div><p>{interval <= 9 ? `0${interval}` : interval}</p></div>
         <div><p>{timeLeft[interval] <= 9 ? `0${timeLeft[interval]}` : timeLeft[interval]}</p></div>
-      </div>
-    )
-  })
+      </div>,
+    );
+  });
 
-  return(
-    <div className='countdown'>
+  return (
+    <div className="countdown">
       <h3>Time Until Launch</h3>
-      <div className='countdown_digits'>
+      <div className="countdown_digits">
         {timerComponents.length && timerComponents}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Countdown
+export default Countdown;

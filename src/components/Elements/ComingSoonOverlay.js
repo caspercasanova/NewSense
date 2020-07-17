@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
 
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const ComingSoonOverLayDiv = styled.div`
   position: absolute;
@@ -13,15 +13,12 @@ const ComingSoonOverLayDiv = styled.div`
   border: 1px solid cyan;
 `;
 
-
 export default function ComingSoonOverlay() {
-  const [overlay, closeOverLay] = useState(true)
-  return overlay ?(
-      
-      <ComingSoonOverLayDiv>
-          <div>Coming Soon...</div>
-          <button className='basic_btn' onClick={()=>closeOverLay(false)}>Let Me See</button>
-      </ComingSoonOverLayDiv>
-      
-  ):(<></>)
+  const [overlay, closeOverLay] = useState(true);
+  return overlay ? (
+    <ComingSoonOverLayDiv>
+      <div>Coming Soon...</div>
+      <button className='basic_btn' onClick={()=>closeOverLay(false)}>Let Me See</button>
+    </ComingSoonOverLayDiv>
+  ) : (<></>);
 }

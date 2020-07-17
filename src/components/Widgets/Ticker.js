@@ -1,8 +1,8 @@
 import React,{useState} from 'react'
 import Field from '../Elements/Field'
 import Modal from '../Elements/Modal'
-import {useInterval} from '../utils'
-import useCollection from '../../firebase/useCollection'
+import {useInterval} from '../../Utilities/utils'
+import useCollection from '../../Firebase/useCollection'
 /* 
 
 TODO: Add Input/submition Checks(length, profanity) 

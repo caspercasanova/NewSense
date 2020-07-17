@@ -19,7 +19,7 @@
         "react"
     ],
     "rules": {
-        "linebreak-style": ["error", "unix"],
+        "linebreak-style": ["error", "windows"],
         "arrow-body-style": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }
