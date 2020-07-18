@@ -1,10 +1,11 @@
+/* eslint-disable linebreak-style */
 import './App.scss';
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 // Pages
 import { loadStripe } from '@stripe/stripe-js'; // returns a stripe key or something
-import Body from './components/Body';
-import LandingPage from './components/LandingPage';
+import Main from './Pages/Main/Main';
+import LandingPage from './Pages/LandingPage/LandingPage';
 // Functions
 import useShoppingCart from './Utilities/useShoppingCart'; 
 import { useAuth } from './Firebase/Auth';
@@ -40,7 +41,7 @@ function App() {
   return auth.user ? (
     <Theme>
       <div className="App">
-        <Body
+        <Main
           stripePromise={stripePromise}
           shoppingCart={shoppingCart}
           stripeProductList={stripeProductList}

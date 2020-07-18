@@ -7,7 +7,7 @@ import CheckoutForm from './CheckoutForm';
 import Cart from './Cart';
 
 export default function Checkout({shoppingCart, stripeProductList, stripePromise}) {
-  let [stage, setStage] = useState(0);
+  const [stage, setStage] = useState(0);
 
   const ConfirmCart = () => (
     <div>
@@ -15,7 +15,11 @@ export default function Checkout({shoppingCart, stripeProductList, stripePromise
         Please Confirm Your Cart
       </div>
       <div>
-        <Cart confirmOrder={()=>setStage(stage += 1)} shoppingCart={shoppingCart} stripeProductList={stripeProductList}/>
+        <Cart
+          confirmOrder={() => setStage(stage + 1)}
+          shoppingCart={shoppingCart}
+          stripeProductList={stripeProductList}
+        />
       </div>
     </div>
   );

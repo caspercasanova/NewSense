@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 // Pages
-import ProductPage from '../Pages/ProductPage/ProductPage';
-import Modal from './Elements/Modal';
-import About from '../Pages/About/About';
-import Navagation from '../Pages/Navagation/Navagation';
-import Checkout from './Checkout';
-import Profile from '../Pages/Profile/Profile';
-import Cart from './Cart';
+import ProductPage from '../ProductPage/ProductPage';
+import Modal from '../../components/Elements/Modal';
+import About from '../About/About';
+import Navagation from '../Navagation/Navagation';
+import Profile from '../Profile/Profile';
+import Checkout from '../Cart&Checkout/Checkout';
+import Cart from '../Cart&Checkout/Cart';
 // Elements
-import Tooltip from './Elements/Tooltip';
-import Highlight from './Elements/Highlight';
+import Tooltip from '../../components/Elements/Tooltip';
+import Highlight from '../../components/Elements/Highlight';
 // Functions
-import { useToggle } from '../Utilities/utils';
+import { useToggle } from '../../Utilities/utils';
 
-export default function Body({ stripePromise, shoppingCart, stripeProductList }) {
+const MainContainer = styled.div`
+  font-family: 'digital-7';
+  height: 100%;
+  width: 100%;
+  display: flex;
+  border: 1px solid cyan;
+  overflow: hidden;
+  padding-right: 25px;
+`;
+
+export default function Main({ stripePromise, shoppingCart, stripeProductList }) {
   const [checkout, toggleCheckout] = useToggle(); // initiate the checkoutProcess
   const [shoppingCartIsShowing, toggleShoppingCart] = useToggle(); // toggle the shopping cart
   const [stripeProductIndex, setStripeProductIndex] = useState(0); // display current product
@@ -23,7 +34,7 @@ export default function Body({ stripePromise, shoppingCart, stripeProductList })
 
   return (
 
-    <div className="Landing_Page">
+    <MainContainer>
       <div style={{
         display: 'flex', flexDirection: 'column', flex: '1 1 0', paddingRight: '10px',
       }}
@@ -98,6 +109,6 @@ export default function Body({ stripePromise, shoppingCart, stripeProductList })
           </Modal>
           )}
 
-    </div>
+    </MainContainer>
   );
 }

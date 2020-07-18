@@ -1,16 +1,16 @@
 
-import React,{useState, useEffect} from 'react'
-import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js'
-import Axios from 'axios'
-import Field from './Elements/Field'
+import React,{ useState, useEffect } from 'react';
+import Axios from 'axios';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import Field from '../../components/Elements/Field';
 
 
-const CARD_OPTIONS ={
+const CARD_OPTIONS = {
   style: {
     empty: {
       fontSize: '20px',
       fontFamily: 'digital-7',
-      letterSpacing: '.5em', 
+      letterSpacing: '.5em',
       color: '#b141f1',
     },
     base: {
@@ -26,38 +26,38 @@ const CARD_OPTIONS ={
       color: '#fa2e46a4',
     },
   },
-}
+};
 
 
-/* 
-4242424242424242 	Succeeds and immediately processes the payment.
-4000000000003220 	3D Secure 2 authentication must be completed for a successful payment.
-4000000000009995 	Always fails with a decline code of insufficient_funds
+/*
+4242424242424242 Succeeds and immediately processes the payment.
+4000000000003220 3D Secure 2 authentication must be completed for a successful payment.
+4000000000009995 Always fails with a decline code of insufficient_funds
 */
-//! look up shipping address object 
+//! look up shipping address object
 //! https://stripe.com/docs/js/appendix/shipping_address
 
-
-const CardField = ({onChange}) => {
+const CardField = ({ onChange }) => {
   return (
     <div className="Card_Field">
       <CardElement options={CARD_OPTIONS} onChange={onChange} />
     </div>
-  )
-}
+  );
+};
 
-const SubmitButton = ({processing, error, children, disabled}) => {
-  return(
-    <button className={`SubmitButton ${error ? 'SubmitButton--error' : ''} basic_btn`}
+const SubmitButton = ({ processing, error, children, disabled }) => {
+  return (
+    <button
+      className={`SubmitButton ${error ? 'SubmitButton--error' : ''} basic_btn`}
       type="submit"
       disabled={processing || disabled}
     >
       {processing ? 'Processing...' : children}
     </button>
-  )
-}
+  );
+};
 
-const ErrorMessage = ({children}) => (
+const ErrorMessage = ({ children }) => (
   <div className="ErrorMessage" role="alert">
     <svg width="16" height="16" viewBox="0 0 17 17">
       <path
@@ -73,7 +73,7 @@ const ErrorMessage = ({children}) => (
   </div>
 );
 
-const ResetButton = ({onClick}) => (
+const ResetButton = ({ onClick }) => (
   <button type="button" className="ResetButton" onClick={onClick}>
     <svg width="32px" height="32px" viewBox="0 0 32 32">
       <path
@@ -89,7 +89,7 @@ const ResetButton = ({onClick}) => (
 
 
 
-const CheckoutForm = ({shoppingCart, stripeProductList}) => {
+const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -118,69 +118,65 @@ const CheckoutForm = ({shoppingCart, stripeProductList}) => {
     address_country: '',
   });
 
-  
+
   useEffect(() => {
-    //get product details such as currency and amount from server
-    //to esure it client cant tamper things
-    let priceData = shoppingCart.returnPrice()
-    setAmount(priceData.orderTotal / 100)
-    setCurrency(priceData.currency)
-      
-      //step 2: Create Payment Intent over Stripe API
-      Axios.post('/create-payment-intent')
-        .then(({data}) => {
-          //console.log(data.client_secret)
-          setClientSecret(data.client_secret)
-        })
-        .catch(err => setError(err.message))
-  }, [])
+    // get product details such as currency and amount from server
+    // to esure it client cant tamper things
+    let priceData = shoppingCart.returnPrice();
+    setAmount(priceData.orderTotal / 100);
+    setCurrency(priceData.currency);
 
-
+    // step 2: Create Payment Intent over Stripe API
+    Axios.post('/create-payment-intent')
+      .then(({ data }) => {
+        // console.log(data.client_secret)
+        setClientSecret(data.client_secret);
+      })
+      .catch((err) => setError(err.message));
+  }, []);
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if(!stripe || !elements){
-      //StripeJs has not loaded yet, make sure to 
-      //disable form submition until stripe has loaded
-      return
-    } 
-    
-    if(error){
+    if (!stripe || !elements) {
+      // StripeJs has not loaded yet, make sure to
+      // disable form submition until stripe has loaded
+      return;
+    }
+
+    if (error) {
       elements.getElement('card').focus();
       return;
-    } 
+    }
 
+    if (cardComplete) setProcessing(true);
 
-    if(cardComplete)
-      setProcessing(true);
-
-    //step 3 use clientSecret and cardelement to confirm payment with stripe 
-    console.log(clientSecret)
+    // step 3 use clientSecret and cardelement to confirm payment with stripe
+    console.log(clientSecret);
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
-        billing_details: billingDetails
+        billing_details: billingDetails,
       },
-    })
-    
-  
+    });
 
-    
-    if(payload.error){
+
+
+
+    if (payload.error) {
       setError(`Payment failed: ${payload.error.message}`);
       setProcessing(false);
-      console.log("[error]", payload.error );
+      console.log('[error]', payload.error);
     } else {
       setError(null);
       setSucceeded(true);
       setMetadata(payload.paymentIntent);
       setProcessing(false);
       setPaymentMethod(payload.paymentMethod);
-      console.log("[PaymentIntent]", payload.paymentIntent);
+      console.log('[PaymentIntent]', payload.paymentIntent);
     }
-  }
+  };
 
 
   const reset = () => {
@@ -199,10 +195,10 @@ const CheckoutForm = ({shoppingCart, stripeProductList}) => {
       address_state: '',
       address_zip: '',
       address_country: '',
-    })
-  }
+    });
+  };
 
-  return paymentMethod ?(
+  return paymentMethod ? (
     <div className="Result">
       <div className="ResultTitle" role="alert">
         Payment Successful
@@ -213,115 +209,109 @@ const CheckoutForm = ({shoppingCart, stripeProductList}) => {
       </div>
       <ResetButton onClick={reset} />
     </div>
-    ):(
+  ) : (
 
-
-    <form  className="Payment_Form" onSubmit={handleSubmit}>
+    <form className="Payment_Form" onSubmit={handleSubmit}>
       <fieldset className="FormGroup">
-        <Field 
+        <Field
           label="Name"
           id="name"
           type="text"
           required
           autoComplete="name"
           value={billingDetails.name}
-          onChange={(e)=> setBillingDetails({...billingDetails, name: e.target.value})}
+          onChange={(e) => setBillingDetails({ ...billingDetails, name: e.target.value })}
         />
-        <Field 
+        <Field
           label="Email"
           id="email"
           type="text"
           required
           autoComplete="email"
           value={billingDetails.email}
-          onChange={(e)=> setBillingDetails({...billingDetails, email: e.target.value})}
-          />
-        </fieldset>
-        
-        <fieldset className="FormGroup">
-          <Field 
-            label="Phone #"
-            id="name"
-            type="text"
-            required
-            autoComplete="tel"
-            value={billingDetails.phone}
-            onChange={(e)=> setBillingDetails({...billingDetails, phone: e.target.value})}
-          />
-          <Field 
-            label="Address 1"
-            id="address_line1"
-            type="text"
-            required
-            value={shippingDetails.line1}
-            onChange={(e)=> setShippingDetails({...shippingDetails, address_line1: e.target.value})}
-          />
-        </fieldset>
+          onChange={(e) => setBillingDetails({ ...billingDetails, email: e.target.value })}
+        />
+      </fieldset>
 
-        <fieldset className="FormGroup">
-         <Field 
-            label="City"
-            id="address_city"
-            type="text"
-            required
-            value={shippingDetails.address_city}
-            onChange={(e)=> setShippingDetails({...shippingDetails, address_city: e.target.value})}
-          />
-          <Field 
-            label="State"
-            id="address_state"
-            type="text"
-            required
-            value={shippingDetails.address_state}
-            onChange={(e)=> setShippingDetails({...shippingDetails, address_state: e.target.value})}
-          />
-        </fieldset>
-        
-        <fieldset className="FormGroup">
-          <Field 
-            label="Postal Code"
-            id="address_zip"
-            type="text"
-            required
-            value={shippingDetails.address_zip}
-            onChange={(e)=> setShippingDetails({...shippingDetails, address_zip: e.target.value})}
-          />
-          <Field 
-            label="Country"
-            id="address_country"
-            type="text"
-            required
-            value={shippingDetails.address_country}
-            onChange={(e)=> setShippingDetails({...shippingDetails, address_country: e.target.value})}
-          />
-        </fieldset>
-        
-        <fieldset className="FormGroup">
-          <CardField 
-            onChange={(e) => {
-              setError(e.error)
-              setCardComplete(e.complete)
-            }}
-          />
-        </fieldset>
+      <fieldset className="FormGroup">
+        <Field
+          label="Phone #"
+          id="name"
+          type="text"
+          required
+          autoComplete="tel"
+          value={billingDetails.phone}
+          onChange={(e) => setBillingDetails({ ...billingDetails, phone: e.target.value })}
+        />
+        <Field
+          label="Address 1"
+          id="address_line1"
+          type="text"
+          required
+          value={shippingDetails.line1}
+          onChange={(e) => setShippingDetails({ ...shippingDetails, address_line1: e.target.value })}
+        />
+      </fieldset>
+
+      <fieldset className="FormGroup">
+        <Field
+          label="City"
+          id="address_city"
+          type="text"
+          required
+          value={shippingDetails.address_city}
+          onChange={(e) => setShippingDetails({ ...shippingDetails, address_city: e.target.value })}
+        />
+        <Field
+          label="State"
+          id="address_state"
+          type="text"
+          required
+          value={shippingDetails.address_state}
+          onChange={(e) => setShippingDetails({ ...shippingDetails, address_state: e.target.value })}
+        />
+      </fieldset>
+
+      <fieldset className="FormGroup">
+        <Field
+          label="Postal Code"
+          id="address_zip"
+          type="text"
+          required
+          value={shippingDetails.address_zip}
+          onChange={(e) => setShippingDetails({ ...shippingDetails, address_zip: e.target.value })}
+        />
+        <Field
+          label="Country"
+          id="address_country"
+          type="text"
+          required
+          value={shippingDetails.address_country}
+          onChange={(e) => setShippingDetails({ ...shippingDetails, address_country: e.target.value })}
+        />
+      </fieldset>
+
+      <fieldset className="FormGroup">
+        <CardField
+          onChange={(e) => {
+            setError(e.error);
+            setCardComplete(e.complete);
+          }}
+        />
+      </fieldset>
       {error && <ErrorMessage>{error.message}</ErrorMessage>}
       <SubmitButton processing={processing} error={error} disabled={!stripe}>
-          Pay Us
+        Pay Us
       </SubmitButton>
 
 
     </form>
-  )
-}
+  );
+};
 
-export default CheckoutForm
+export default CheckoutForm;
 
-
-
-
-
-
-/* 
+/*
 
 <div className='form_col top'>
   <h6>Account</h6>
@@ -332,6 +322,4 @@ export default CheckoutForm
       <label>Codename</label>
     </div>
   </div>
-
-
 */
