@@ -7,7 +7,7 @@ import { loadStripe } from '@stripe/stripe-js'; // returns a stripe key or somet
 import Main from './Pages/Main/Main';
 import LandingPage from './Pages/LandingPage/LandingPage';
 // Functions
-import useShoppingCart from './Utilities/useShoppingCart'; 
+import useShoppingCart from './Utilities/useShoppingCart';
 import { useAuth } from './Firebase/Auth';
 // import {fireStore} from './firebase/firebase'
 import Theme from './styles/Theme';
@@ -36,7 +36,7 @@ function App() {
     fetchProduct();
   }, []);
 
-  console.log(auth.user, 'I AM THE USER');
+  // console.log(auth.user, 'I AM THE USER');
 
   return auth.user ? (
     <Theme>

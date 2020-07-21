@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import PropTypes from 'prop-types'
 // Stripe Imports
 import {Elements} from '@stripe/react-stripe-js';
 // Element
@@ -35,3 +36,9 @@ export default function Checkout({shoppingCart, stripeProductList, stripePromise
     </div>
   );
 }
+
+// Checkout.propTypes = {
+//   shoppingCart
+// }
+
+

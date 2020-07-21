@@ -1,6 +1,10 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+// ELements
 import Divider from '../../components/Elements/Divider';
+// Functions / Hooks
 import { useToggle } from '../../Utilities/utils';
 
 export default function PreviousPurchases({ purchasesArray }) {
@@ -28,17 +32,20 @@ export default function PreviousPurchases({ purchasesArray }) {
   );
 }
 
-const PurchaseContainer = styled.div`
-  
-`;
+PreviousPurchases.propTypes = { purchasesArray: PropTypes.array.isRequired };
+
+/* --------------------------- Children Components -------------------------- */
+
+const PurchaseContainer = styled.div``;
+
 const PurchaseHeader = styled.div`
   display: flex;
   padding: 4px 10px;
 `;
 
-const HasShipped = styled.div`
-  color:  ${props => props.hasShipped ? 'green' : '#fa2e46a4' };
-  animation: ${props => props.hasShipped && 'blink 2.5s linear infinite'};
+const HasShippedContainer = styled.div`
+  color:  ${(props) => props.hasShipped ? 'green' : '#fa2e46a4'};
+  animation: ${(props) => props.hasShipped && 'blink 2.5s linear infinite'};
   width: 100%;
 `;
 
@@ -50,24 +57,34 @@ const Purchase = ({ purchase }) => {
         <PurchaseHeader>
           <div style={{ width: '100%' }}>{purchase.orderNumber}</div>
           <div style={{ width: '100%' }}>{purchase.dateOrdered}</div>
-          <HasShipped hasShipped={purchase.hasShipped}>{purchase.hasShipped ? 'Delivered' : 'En Route'}</HasShipped>
+          <HasShippedContainer hasShipped={purchase.hasShipped}>{purchase.hasShipped ? 'Delivered' : 'En Route'}</HasShippedContainer>
         </PurchaseHeader>
-        {show &&
-          purchase.productList.map((product, index) => (
-            <div key={index} style={{ display: 'flex' }}>
-              <div><img style={{ width: '100px' }} src={product.img} alt={`product${index}`}/></div>
-              <div>
-                <div>Product Name: {product.name}</div>
-                <div>Quantity: {product.quantity}</div>
-                <div>Product Price: {product.price / 100}</div>
-                <div>Total: $ {product.quantity * (product.price / 100)}</div>
-              </div>
+        {show
+        && purchase.productList.map((product, index) => (
+          <div key={index} style={{ display: 'flex' }}>
+            <div><img style={{ width: '100px' }} src={product.img} alt={`product${index}`} /></div>
+            <div>
+              <div>Product Name: {product.name}</div>
+              <div>Quantity: {product.quantity}</div>
+              <div>Product Price: {product.price / 100}</div>
+              <div>Total: $ {product.quantity * (product.price / 100)}</div>
             </div>
-          ))}
+          </div>
+        ))}
         <div>Order Total: $ {purchase.orderPrice}</div>
-        <button onClick={toggleShow} className='basic_btn'>Show {show ? 'Less' : 'More'}</button>
+        <button type="button" onClick={toggleShow} className="basic_btn">Show {show ? 'Less' : 'More'}</button>
       </PurchaseContainer>
       <hr />
     </li>
   );
+};
+
+Purchase.propTypes = {
+  purchase: PropTypes.shape({
+    orderNumber: PropTypes.string,
+    dateOrdered: PropTypes.string,
+    hasShipped: PropTypes.bool,
+    orderPrice: PropTypes.string,
+    productList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
 };

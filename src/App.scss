@@ -23,13 +23,6 @@ use this
 
 
 
-
-
-
-
-
-
-
 .Product_Section{
   width: 100%;
   position: relative;
@@ -497,14 +490,6 @@ use this
   
 }
 
-
-
-
-
-
-
-
-
 .countdown{
   display: flex;
   flex-direction: column;
@@ -517,7 +502,6 @@ use this
     margin-left: 3px;
   }
 }
-
 
 
 .quantity_container{
@@ -542,32 +526,14 @@ use this
 }
 
 
-
-.Highlight{
-  position: relative;
-  & .Underline{
-    position: absolute;
-    height: 2px;
-    width: 110%;
-    background-color: $red_alert;
-    bottom: -20%;
-    left: -5%;
-    transition: .500s; 
-    opacity: .9;
-    z-index: -1;
-  }
-  & .active {
-    height: 120%;
-  }
-   
-}
-
 .ToolTip{
   position: relative;
   margin-left: 5px;
   margin-right: 5px;
+  z-index: 200;
   white-space: nowrap;
   & span{
+    z-index: 200;
     font-size: 20px;
     color: $purple_ultra;
   }
@@ -720,15 +686,6 @@ use this
   }
 }
 
-.Card_Field{
-  border-left: 1px solid $purple_ultra;
-  border-bottom: 1px solid $purple_ultra;
-  padding: 0px 10px 10px 0px;
-  margin-top: 40px;
-  width: 100%;
-  margin-left: 10px;
-  margin-right: 10px;
-}
 
 
 @mixin Inputs($bg){

@@ -1,9 +1,11 @@
-
-import React,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Axios from 'axios';
+// Stripe Imports
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+// Elements
 import Field from '../../components/Elements/Field';
-
 
 const CARD_OPTIONS = {
   style: {
@@ -28,7 +30,6 @@ const CARD_OPTIONS = {
   },
 };
 
-
 /*
 4242424242424242 Succeeds and immediately processes the payment.
 4000000000003220 3D Secure 2 authentication must be completed for a successful payment.
@@ -37,13 +38,29 @@ const CARD_OPTIONS = {
 //! look up shipping address object
 //! https://stripe.com/docs/js/appendix/shipping_address
 
+const CardFieldContainer = styled.div`
+  border-left: 1px solid #b141f1;
+  border-bottom: 1px solid #b141f1;
+  padding: 0px 10px 10px 0px;
+  margin-top: 40px;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px;
+`;
+
 const CardField = ({ onChange }) => {
   return (
-    <div className="Card_Field">
+    <CardFieldContainer>
       <CardElement options={CARD_OPTIONS} onChange={onChange} />
-    </div>
+    </CardFieldContainer>
   );
 };
+
+CardField.propTypes = {
+  onChange: PropTypes.func.isRequired,
+};
+
+/* ------------------------------ Stripe Buttons ------------------------------ */
 
 const SubmitButton = ({ processing, error, children, disabled }) => {
   return (
@@ -56,6 +73,28 @@ const SubmitButton = ({ processing, error, children, disabled }) => {
     </button>
   );
 };
+SubmitButton.propTypes = {
+  processing: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+};
+
+const ResetButton = ({ onClick }) => (
+  <button type="button" className="ResetButton" onClick={onClick}>
+    <svg width="32px" height="32px" viewBox="0 0 32 32">
+      <path
+        fill="#FFF"
+        d="M15,7.05492878 C10.5000495,7.55237307 7,11.3674463 7,16 C7,20.9705627 11.0294373,25 16,25 C20.9705627,25 25,20.9705627 25,16 C25,15.3627484 24.4834055,14.8461538 23.8461538,14.8461538 C23.2089022,14.8461538 22.6923077,15.3627484 22.6923077,16 C22.6923077,19.6960595 19.6960595,22.6923077 16,22.6923077 C12.3039405,22.6923077 9.30769231,19.6960595 9.30769231,16 C9.30769231,12.3039405 12.3039405,9.30769231 16,9.30769231 L16,12.0841673 C16,12.1800431 16.0275652,12.2738974 16.0794108,12.354546 C16.2287368,12.5868311 16.5380938,12.6540826 16.7703788,12.5047565 L22.3457501,8.92058924 L22.3457501,8.92058924 C22.4060014,8.88185624 22.4572275,8.83063012 22.4959605,8.7703788 C22.6452866,8.53809377 22.5780351,8.22873685 22.3457501,8.07941076 L22.3457501,8.07941076 L16.7703788,4.49524351 C16.6897301,4.44339794 16.5958758,4.41583275 16.5,4.41583275 C16.2238576,4.41583275 16,4.63969037 16,4.91583275 L16,7 L15,7 L15,7.05492878 Z M16,32 C7.163444,32 0,24.836556 0,16 C0,7.163444 7.163444,0 16,0 C24.836556,0 32,7.163444 32,16 C32,24.836556 24.836556,32 16,32 Z"
+      />
+    </svg>
+  </button>
+);
+
+ResetButton.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};
+
+/* ------------------------------ ErrorMessage ------------------------------ */
 
 const ErrorMessage = ({ children }) => (
   <div className="ErrorMessage" role="alert">
@@ -73,21 +112,7 @@ const ErrorMessage = ({ children }) => (
   </div>
 );
 
-const ResetButton = ({ onClick }) => (
-  <button type="button" className="ResetButton" onClick={onClick}>
-    <svg width="32px" height="32px" viewBox="0 0 32 32">
-      <path
-        fill="#FFF"
-        d="M15,7.05492878 C10.5000495,7.55237307 7,11.3674463 7,16 C7,20.9705627 11.0294373,25 16,25 C20.9705627,25 25,20.9705627 25,16 C25,15.3627484 24.4834055,14.8461538 23.8461538,14.8461538 C23.2089022,14.8461538 22.6923077,15.3627484 22.6923077,16 C22.6923077,19.6960595 19.6960595,22.6923077 16,22.6923077 C12.3039405,22.6923077 9.30769231,19.6960595 9.30769231,16 C9.30769231,12.3039405 12.3039405,9.30769231 16,9.30769231 L16,12.0841673 C16,12.1800431 16.0275652,12.2738974 16.0794108,12.354546 C16.2287368,12.5868311 16.5380938,12.6540826 16.7703788,12.5047565 L22.3457501,8.92058924 L22.3457501,8.92058924 C22.4060014,8.88185624 22.4572275,8.83063012 22.4959605,8.7703788 C22.6452866,8.53809377 22.5780351,8.22873685 22.3457501,8.07941076 L22.3457501,8.07941076 L16.7703788,4.49524351 C16.6897301,4.44339794 16.5958758,4.41583275 16.5,4.41583275 C16.2238576,4.41583275 16,4.63969037 16,4.91583275 L16,7 L15,7 L15,7.05492878 Z M16,32 C7.163444,32 0,24.836556 0,16 C0,7.163444 7.163444,0 16,0 C24.836556,0 32,7.163444 32,16 C32,24.836556 24.836556,32 16,32 Z"
-      />
-    </svg>
-  </button>
-);
-
-
-
-
-
+/* ------------------------------ CheckoutForm ------------------------------ */
 
 const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
   const stripe = useStripe();
@@ -107,7 +132,7 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
   const [billingDetails, setBillingDetails] = useState({
     email: '',
     phone: '',
-    name: ''
+    name: '',
   });
   const [shippingDetails, setShippingDetails] = useState({
     address_line1: '',
@@ -118,15 +143,18 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
     address_country: '',
   });
 
-
+  // Step 1: Retrieve Sanitized Prices From Server &
+  // Create a Payment Intent via Stripe
   useEffect(() => {
-    // get product details such as currency and amount from server
-    // to esure it client cant tamper things
-    let priceData = shoppingCart.returnPrice();
+    // Retieves product details from server
+    // - Product Prices
+    // - Cart Total
+    // - Currency
+    const priceData = shoppingCart.returnPrice();
     setAmount(priceData.orderTotal / 100);
     setCurrency(priceData.currency);
 
-    // step 2: Create Payment Intent over Stripe API
+    // Stripe Payment Intent
     Axios.post('/create-payment-intent')
       .then(({ data }) => {
         // console.log(data.client_secret)
@@ -135,10 +163,8 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
       .catch((err) => setError(err.message));
   }, []);
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (!stripe || !elements) {
       // StripeJs has not loaded yet, make sure to
       // disable form submition until stripe has loaded
@@ -153,16 +179,13 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
     if (cardComplete) setProcessing(true);
 
     // step 3 use clientSecret and cardelement to confirm payment with stripe
-    console.log(clientSecret);
+    // console.log(clientSecret);
     const payload = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: billingDetails,
       },
     });
-
-
-
 
     if (payload.error) {
       setError(`Payment failed: ${payload.error.message}`);
@@ -220,7 +243,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           required
           autoComplete="name"
           value={billingDetails.name}
-          onChange={(e) => setBillingDetails({ ...billingDetails, name: e.target.value })}
+          onChange={(e) => setBillingDetails({
+            ...billingDetails, name: e.target.value,
+          })}
         />
         <Field
           label="Email"
@@ -229,7 +254,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           required
           autoComplete="email"
           value={billingDetails.email}
-          onChange={(e) => setBillingDetails({ ...billingDetails, email: e.target.value })}
+          onChange={(e) => setBillingDetails({
+            ...billingDetails, email: e.target.value,
+          })}
         />
       </fieldset>
 
@@ -241,7 +268,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           required
           autoComplete="tel"
           value={billingDetails.phone}
-          onChange={(e) => setBillingDetails({ ...billingDetails, phone: e.target.value })}
+          onChange={(e) => setBillingDetails({
+            ...billingDetails, phone: e.target.value,
+          })}
         />
         <Field
           label="Address 1"
@@ -249,7 +278,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           type="text"
           required
           value={shippingDetails.line1}
-          onChange={(e) => setShippingDetails({ ...shippingDetails, address_line1: e.target.value })}
+          onChange={(e) => setShippingDetails({
+            ...shippingDetails, address_line1: e.target.value,
+          })}
         />
       </fieldset>
 
@@ -260,7 +291,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           type="text"
           required
           value={shippingDetails.address_city}
-          onChange={(e) => setShippingDetails({ ...shippingDetails, address_city: e.target.value })}
+          onChange={(e) => setShippingDetails({
+            ...shippingDetails, address_city: e.target.value,
+          })}
         />
         <Field
           label="State"
@@ -268,7 +301,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           type="text"
           required
           value={shippingDetails.address_state}
-          onChange={(e) => setShippingDetails({ ...shippingDetails, address_state: e.target.value })}
+          onChange={(e) => setShippingDetails({
+            ...shippingDetails, address_state: e.target.value,
+          })}
         />
       </fieldset>
 
@@ -279,7 +314,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           type="text"
           required
           value={shippingDetails.address_zip}
-          onChange={(e) => setShippingDetails({ ...shippingDetails, address_zip: e.target.value })}
+          onChange={(e) => setShippingDetails({
+            ...shippingDetails, address_zip: e.target.value,
+          })}
         />
         <Field
           label="Country"
@@ -287,7 +324,9 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
           type="text"
           required
           value={shippingDetails.address_country}
-          onChange={(e) => setShippingDetails({ ...shippingDetails, address_country: e.target.value })}
+          onChange={(e) => setShippingDetails({
+            ...shippingDetails, address_country: e.target.value,
+          })}
         />
       </fieldset>
 
@@ -304,22 +343,8 @@ const CheckoutForm = ({ shoppingCart, stripeProductList }) => {
         Pay Us
       </SubmitButton>
 
-
     </form>
   );
 };
 
 export default CheckoutForm;
-
-/*
-
-<div className='form_col top'>
-  <h6>Account</h6>
-
-  <div className='form_row'>
-    <div className='form_input'>
-      <input></input>
-      <label>Codename</label>
-    </div>
-  </div>
-*/

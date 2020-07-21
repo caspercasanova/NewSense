@@ -27,7 +27,7 @@ export default function Cart({
 
       <div>
         <div>
-          Total: {shoppingCart.price === undefined ? '0' : (shoppingCart.price.orderTotal/ 100).toFixed(2)}
+          Total: {shoppingCart.price === undefined ? '0' : ((shoppingCart.price.orderTotal / 100).toFixed(2))}
         </div>
         {toggleCheckout && <div><button type="button" className="yellow_btn" style={{ width: '100%' }} onClick={toggleCheckout}>Checkout</button></div>}
         {confirmOrder && <div><button type="button" className="yellow_btn" style={{ width: '100%' }} onClick={confirmOrder}>Confirm</button></div>}

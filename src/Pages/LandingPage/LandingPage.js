@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 // Hooks
 import { useToggle } from '../../Utilities/utils';
 import { useAuth } from '../../Firebase/Auth';
@@ -33,7 +34,14 @@ export default function LandingPage({ loginFunction }) {
       <div style={{ display: 'flex', flexDirection: 'column', flex: '1 1 0' }}>
 
         <div style={{ display: 'flex', flexDirection: 'column', margin: 'auto auto' }}>
-          <div onMouseOver={toggleHovered} onMouseOut={toggleHovered}><img style={{ width: '50px' }} src={NSAlogo} alt="logo" /></div>
+          <div
+            onMouseOver={toggleHovered}
+            onFocus={toggleHovered}
+            onMouseOut={toggleHovered}
+            onBlur={toggleHovered}
+          >
+            <img style={{ width: '50px' }} src={NSAlogo} alt="logo" />
+          </div>
           {!hovered && (
             <h1 className="blink_soft">
               <TypedMessage message="New Sense Active" />
@@ -61,6 +69,12 @@ export default function LandingPage({ loginFunction }) {
     </LandingPageContainer>
   );
 }
+
+LandingPage.propTypes = {
+  loginFunction: PropTypes.func,
+};
+
+/* --------------------------- Login Components -------------------------- */
 
 const LoginBox = ({setIsSignedIn}) => {
   const [login, toggleLogin] = useToggle(true);
@@ -92,6 +106,12 @@ const LoginBox = ({setIsSignedIn}) => {
   );
 };
 
+LoginBox.propTypes = {
+  setIsSignedIn: PropTypes.func.isRequired,
+};
+
+/* ------------------------ Reset Password Component ------------------------ */
+
 const ResetPassword = ({ toggleResetPassword }) => {
   const [email, setEmail] = useState('');
   const handleSubmit = (event) => {
@@ -108,6 +128,12 @@ const ResetPassword = ({ toggleResetPassword }) => {
     </FormContainer>
   );
 };
+
+ResetPassword.propTypes ={
+  toggleResetPassword: PropTypes.func.isRequired,
+};
+
+/* ------------------------------- SignInForm ------------------------------- */
 
 const SignInForm = () => {
   const [email, setEmail] = useState('');
@@ -131,6 +157,8 @@ const SignInForm = () => {
     </FormContainer>
   );
 };
+
+/* ------------------------------- SignUpForm ------------------------------- */
 
 const SignUpForm = () => {
   const [email, setEmail] = useState('');

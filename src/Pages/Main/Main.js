@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 // Pages
 import ProductPage from '../ProductPage/ProductPage';
 import Modal from '../../components/Elements/Modal';
@@ -11,8 +12,9 @@ import Cart from '../Cart&Checkout/Cart';
 // Elements
 import Tooltip from '../../components/Elements/Tooltip';
 import Highlight from '../../components/Elements/Highlight';
-// Functions
+// Functions / Hooks
 import { useToggle } from '../../Utilities/utils';
+import { useAuth } from '../../Firebase/Auth';
 
 const MainContainer = styled.div`
   font-family: 'digital-7';
@@ -25,6 +27,7 @@ const MainContainer = styled.div`
 `;
 
 export default function Main({ stripePromise, shoppingCart, stripeProductList }) {
+  const auth = useAuth();
   const [checkout, toggleCheckout] = useToggle(); // initiate the checkoutProcess
   const [shoppingCartIsShowing, toggleShoppingCart] = useToggle(); // toggle the shopping cart
   const [stripeProductIndex, setStripeProductIndex] = useState(0); // display current product
@@ -76,7 +79,7 @@ export default function Main({ stripePromise, shoppingCart, stripeProductList })
 
       {introduction
           && (
-          <Modal closeModal={toggleIntroduction} header="Welcome to N.S.A. User">
+          <Modal closeModal={toggleIntroduction} header={`Welcome to N.S.A. ${auth.user.displayName}`}>
             <Tooltip message="This is a test site, do not give us money." title="Please Be Aware" />
             <p>Though in a prototypal stage, NSA will be offically launching ASAP with new and exciting items. Details will come. Perhaps You Would like to hear about them as soon as they come out?</p>
             <p>
@@ -112,3 +115,9 @@ export default function Main({ stripePromise, shoppingCart, stripeProductList })
     </MainContainer>
   );
 }
+
+Main.propTypes = {
+  stripePromise: PropTypes.object,
+  shoppingCart: PropTypes.object,
+  stripeProductList: PropTypes.array,
+};
