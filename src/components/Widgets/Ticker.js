@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Field from '../Elements/Field';
 import Modal from '../Elements/Modal';
 import useInterval from '../../Utilities/hooks/useInterval';
-import useCollection from '../../Firebase/firebase_hooks/useCollection';
+// import useCollection from '../../Firebase/firebase_hooks/useCollection';
 
 // TODO: Add Input/submition Checks(length, profanity)
 // TODO: Perhaps convert to Object model and commentor has name/insta attached to end of comment
@@ -18,7 +18,7 @@ export default function Ticker() {
     setPhrase(phrases[Math.floor(Math.random() * phrases.length)]);
   }, 15000);
 
-  const tickerbarData = useCollection('tickerbar');
+  // const tickerbarData = useCollection('tickerbar');
   // console.log(tickerbarData)
   // add phrase to the phrases array
   const addNewPhrase = () => {

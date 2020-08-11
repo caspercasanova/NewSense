@@ -1,6 +1,6 @@
 import React from 'react';
 import AreaChartContainer from '../../components/Charts/AreaChartContainer';
-import Divider from '../../components/Elements/Divider';
+
 /* SASS METRICS */
 import Countdown from '../../components/Widgets/Countdown';
 import Card from '../../components/Elements/Card';

@@ -11,6 +11,7 @@ import { useAuth } from '../../Firebase/firebase_hooks/useAuth';
 // Assets
 import NSAlogo from '../../assets/pics/NSAbrainDaggertrans.png';
 
+
 const purchasesArrayDefault = [
   {
     productList: [
@@ -47,6 +48,20 @@ const ProfileContainer = styled.div`
   }
 `;
 
+const StyledHeader = styled.div`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  & h2 {
+    color: var(--color-purple);
+  }
+  & hr {
+    width: 100%;
+    color: var(--color-purple);
+  }
+`;
+
+
 export default function Profile() {
   const auth = useAuth();
   const defaultProfile = {
@@ -58,9 +73,17 @@ export default function Profile() {
     previousPurchases: auth.user.previousPurchases || purchasesArrayDefault,
   };
 
+
   return (
     <ProfileContainer>
-      <Card header="Profile">
+      <Card>
+        <StyledHeader>
+          <Row>
+            <h2>Profile</h2>
+            <button type="button" className="basic_btn" onClick={auth.signout}>Logout</button>
+          </Row>
+          <hr />
+        </StyledHeader>
         <Row>
           <div>
             <h5>Display Name:</h5>

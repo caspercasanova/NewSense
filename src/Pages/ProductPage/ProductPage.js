@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 
 import Product from '../../components/Elements/Product'
 import Divider from '../../components/Elements/Divider';
-import Card from '../../components/Elements/Card';
-
 import ChartLarge from '../../components/Charts/ChartLarge';
 import Statistics from './Statistics';
 import Carousel from '../../components/Elements/Carousel';
 import SmallCard from '../../components/Elements/SmallCard';
 
-
 // TODO ADD LITTLE BONUS CHARACTERISTICS FOR EACH PRODUCT :P META DATA LIKE OPENBASE.io
 
 export default function ProductPage({
   stripeProduct,
-  shoppingCart,
-  toggleCheckout,
   stripeProductList,
   setStripeProductIndex
 }) {
@@ -28,8 +23,6 @@ export default function ProductPage({
       <div className="Product_Section">
         <Product
           stripeProduct={stripeProduct}
-          shoppingCart={shoppingCart}
-          toggleCheckout={toggleCheckout}
         />
         <Statistics />
         <Comments />
@@ -61,9 +54,6 @@ const ProductsCarousel = ({ stripeProductList, setStripeProductIndex }) => {
     </>
   );
 };
-
-
-
 
 const Comments = () => {
   /* User Pic, user rank,  */

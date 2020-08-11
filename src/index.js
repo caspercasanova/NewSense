@@ -5,11 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { ProvideAuth } from './Firebase/firebase_hooks/useAuth';
+import {ProvideShoppingCart} from './Utilities/hooks/useShoppingCart';
 
 ReactDOM.render(
   <React.StrictMode>
     <ProvideAuth>
-      <App />
+      <ProvideShoppingCart>
+        <App />
+      </ProvideShoppingCart>
     </ProvideAuth>
   </React.StrictMode>,
   document.getElementById('root'),

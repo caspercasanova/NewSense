@@ -1,72 +1,85 @@
-import { useState } from 'react';
+import React, { useState, useContext, createContext } from 'react';
 import Axios from 'axios';
 
-// Cart hook that returns a single cart object
+// Cart hook that returns a single shoppingCart object
 // that has methods within it to add/remove/update price
 // TODO i would love to add the methods to the prototype
-//      to keep the cart object cleaner but its not working
+//      to keep the shoppingCart object cleaner but its not working
 //      currently
 //! needs documentation!
-function useShoppingCart() {
-  const [cart, setCart] = useState({
+
+function useProvideShoppingCart() {
+  const [shoppingCart, setCart] = useState({
     list: {},
     price: {},
   });
 
   // used to calculate prices on the server
-  // every time the cart is updated
+  // every time the shoppingCart is updated
 
   const calculatePrice = (theoreticalList) => Axios.post('/calculatePrice', theoreticalList);
 
   // can be refactored!
-  cart.returnPrice = async () => {
-    const res = await calculatePrice(cart.list);
+  shoppingCart.returnPrice = async () => {
+    const res = await calculatePrice(shoppingCart.list);
     const { data } = res;
     return data;
   };
 
-  cart.incrementItem = async (itemID, quanity = 1) => {
+  shoppingCart.incrementItem = async (itemID, quanity = 1) => {
     // if no item exists
-    if (cart.list[itemID] === undefined) {
-      const newList = { ...cart.list, [itemID]: quanity };
+    if (shoppingCart.list[itemID] === undefined) {
+      const newList = { ...shoppingCart.list, [itemID]: quanity };
       const res = await calculatePrice(newList);
       const { data } = res;
-      const newState = { ...cart, list: newList, price: data };
+      const newState = { ...shoppingCart, list: newList, price: data };
       setCart(newState);
     } else {
-      const newList = { ...cart.list, [itemID]: cart.list[itemID] += quanity };
+      const newList = { ...shoppingCart.list, [itemID]: shoppingCart.list[itemID] += quanity };
       const res = await calculatePrice(newList);
       const { data } = res;
-      const newState = { ...cart, list: newList, price: data };
+      const newState = { ...shoppingCart, list: newList, price: data };
       setCart(newState);
     }
-    console.log(cart, 'I Added an Item to the cart!');
+    console.log(shoppingCart, 'I Added an Item to the shoppingCart!');
   };
 
-  cart.decrementItem = async (itemID, quanity = 1) => {
+  shoppingCart.decrementItem = async (itemID, quanity = 1) => {
     // if delete item automatically
-    if (cart.list[itemID] === 1) {
-      const newList = { ...cart.list };
+    if (shoppingCart.list[itemID] === 1) {
+      const newList = { ...shoppingCart.list };
       delete newList[itemID];
       const res = await calculatePrice(newList);
       const { data } = res;
-      const newState = { ...cart, list: newList, price: data };
+      const newState = { ...shoppingCart, list: newList, price: data };
       setCart(newState);
     } else {
-      const newList = { ...cart.list, [itemID]: cart.list[itemID] -= quanity };
+      const newList = { ...shoppingCart.list, [itemID]: shoppingCart.list[itemID] -= quanity };
       const res = await calculatePrice(newList);
       const { data } = res;
-      const newState = { ...cart, newList, price: data };
+      const newState = { ...shoppingCart, newList, price: data };
       setCart(newState);
     }
-    console.log(cart, 'I deleted an item in the cart!');
+    console.log(shoppingCart, 'I deleted an item in the shoppingCart!');
   };
 
-  cart.clearCart = () => {
-    setCart({ ...cart, list: {}, price: {} });
+  shoppingCart.clearCart = () => {
+    setCart({ ...shoppingCart, list: {}, price: {} });
   };
 
-  return cart;
+  return shoppingCart;
 }
+// react context
+const shoppingCartContext = createContext();
+// Hook for child components to get the cart obj
+// and re render when it changes
+export default function useShoppingCart() {
+  return useContext(shoppingCartContext);
+}
+// provider that wraps the app and makes cart obj
+// available to any child component
 
-export default useShoppingCart;
+export function ProvideShoppingCart({ children }) {
+  const shoppingObj = useProvideShoppingCart();
+  return <shoppingCartContext.Provider value={shoppingObj} >{children}</shoppingCartContext.Provider>
+}

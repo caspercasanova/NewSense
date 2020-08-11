@@ -1,13 +1,6 @@
 
 @import "styles/colors", "styles/sizing";
 
-/* AT 500 lines, break apart into seperate files 
-
-border: 1px solid rgba(0,162,253,0.15);
-rgba(22, 104, 159, 0.2);
-use this
-
-*/
 
 .App {
   position: relative;
@@ -21,15 +14,12 @@ use this
   padding-bottom: 10px;
 }
 
-
-
 .Product_Section{
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
-  
 }
 
 
@@ -102,12 +92,6 @@ use this
 }
 
 
-
-
-
-
-
-
 .TickerBar{
   width: 100%;
   margin-top: 10px;
@@ -178,6 +162,7 @@ use this
   justify-content: space-evenly;
   position: relative;
 }
+
 .placeholder_img_SM{
   position: relative;
   background-color: gray;
@@ -188,14 +173,6 @@ use this
     background-color: darken($color: #000000, $amount: 10%);
   }
 }
-
-.product_title{
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 100px;
-}
-
-
 
 
 .chart_holder{
@@ -218,36 +195,13 @@ use this
 }
 
 
-.connection_thing{
-  justify-self: flex-end;
-  position: relative;
-  height: 15px;
-  width: 15px;
-  animation: spin 2s infinite;
-  border: 1px solid $color-highlight;
-  &:before{
-    position: absolute;
-    content: '';
-    top: 10%;
-    left: 19%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 5px 8.7px 5px;
-    border-color: transparent transparent $color-legendary transparent;
-    animation: spin 2s infinite reverse;
-  }
-}
-
-
-
-
 
 /* ACCOUNT FORM STYLING */
 .account_form{
   display: flex;
   flex-direction: column;
 }
+
 .form_col{
   display: flex;
   border-radius: $border-radius;
@@ -262,9 +216,9 @@ use this
   > h6 {
     position: absolute;
     top: 1%; left: 1%;
-  }
-  
+  }  
 }
+
 .form_input{
   position: relative;
   > label {
@@ -291,20 +245,11 @@ use this
     
   }
 }
+
 .form_row{
   display: flex;
   justify-content: flex-start;
 }
-/* form_input */
-
-
-
-
-/* 
-
-#GLOW TRAY BOX
-
-*/
 
 .tray{
   width: 100%;
@@ -398,11 +343,6 @@ use this
   }
 }
 
-
-
-
-
-
 .Modal_background{
   position: fixed;
   left: 0;
@@ -444,16 +384,6 @@ use this
     margin-bottom: 20px;
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 .TextBox{
   display: flex; 
@@ -666,58 +596,12 @@ use this
 .FormGroup{
   display: flex;
   justify-content: space-between;
-
   width: 100%;
   & .Field{
     margin-left: 10px;
     margin-right: 10px;
   }
 }
-
-
-
-
-
-.Statistics_Minor{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-
-
-
-.Cart{
-  width: 100%;
-  border: 1px solid $yellow_ultra;
-  padding: 10px;
-  .Cart_header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .Cart_item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-    box-shadow: 0 0 5px 0px rgba(128, 128, 128, .25) inset;
-    padding: 5px 10px; 
-    & button{
-      font-size: 22px;
-    }
-  }
-
-  .Cart_item_picture{
-    max-width: 50px;
-    height: auto;
-  }
-}
-
-
-
-
 
 
 

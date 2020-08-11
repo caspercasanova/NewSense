@@ -7,17 +7,15 @@ import { loadStripe } from '@stripe/stripe-js'; // returns a stripe key or somet
 import Main from './Pages/Main/Main';
 import LandingPage from './Pages/LandingPage/LandingPage';
 // Functions
-import useShoppingCart from './Utilities/hooks/useShoppingCart';
 import { useAuth } from './Firebase/firebase_hooks/useAuth';
 // import {fireStore} from './firebase/firebase'
 import Theme from './styles/Theme';
 
 function App() {
   const auth = useAuth();
-
-  const shoppingCart = useShoppingCart();
   const [stripePromise, setStripePromise] = useState(null); // stripe promise return stripe key
   const [stripeProductList, setStripeProductList] = useState([]); // all products from stripe
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await Axios.get('/get_stripe_api_key');
@@ -43,7 +41,6 @@ function App() {
       <div className="App">
         <Main
           stripePromise={stripePromise}
-          shoppingCart={shoppingCart}
           stripeProductList={stripeProductList}
         />
       </div>
