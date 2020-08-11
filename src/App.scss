@@ -81,6 +81,7 @@ use this
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: hsl(0, 0%, 9%);
   & input{
     height: 30px;
     padding-left: 10px;
@@ -636,21 +637,21 @@ use this
     }
     padding: 4px 8px;
     min-width: 250px;
-    & .Carousel_item_body{
-      padding-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      & img{
-        width: 100px;
-        
-        height: 100px;
-        background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-      }
-      & picture{}
-    }   
+  
   }
 }
+.Carousel_item_body{
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  & img{
+    width: 100px;
+    height: 100px;
+    background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  }
+  & picture{}
+}  
 
 
 .Payment_Form{
