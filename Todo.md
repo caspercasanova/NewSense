@@ -1,6 +1,7 @@
 
 ### New Sense Active Development
 --- 
+-- Going To Restart This
 ### Resources
       -https://www.sanity.io/docs/overview-introduction
             -This website has some concepts I knew would be cool features
@@ -26,6 +27,7 @@
       - Robin Wieruch
       - Amellia wattenberger blog
       - https://www.robinwieruch.de/firebase-test
+ 
 ---
 > ## **TODOS** 
 --- 
@@ -122,12 +124,6 @@
             -Components that I have always wondered how to create are now for me easy to create like landing pages and stock tickers and carousels. 
             -Sci-Fi design is cool and almost a study of its own. 
             -Components like a Coming Soon Modal extremely important and more things like them need to be discovered and iterated upon. 
----         
-
-            
-
-
-
 ## 6/19/2020: Things To Ponder
       - (Business Model/Product Is Insufficient)
         - Selling a digital product seems to fall more in line with stripes API as they really promote Developers to utilize the subscription model. I don't know of a product that could utilize such a method, yet....

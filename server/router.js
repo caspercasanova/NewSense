@@ -87,15 +87,16 @@ router.route('/all_products_and_prices')
       //! NOTE TO SELF
       //! THIS DOESNT EVEN WORK
       //! THE PRICES FOR EACH PRODUCT ARE INCORRECT
+      //! CONVERT TO A FUNCTION THAT MERGES PRICES TO Whatever
+      console.log(products.data);
       for (const priceObj of prices.data) {
+        console.log(prices.data);
         for (let priceList of priceObj.product) {
           for (const product of products.data) {
             product.price = { ...priceObj };
           }
         }
       }
-
-
 
       console.log('I Merged');
       res.send(products);

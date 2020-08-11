@@ -5,6 +5,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import firebase, { firestore } from './firebase';
 
 const auth = firebase.auth();
+
 const authContext = createContext();
 
 // Provider hook that creates auth object and handles state
