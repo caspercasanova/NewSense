@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { useAuth } from '../../Firebase/Auth';
+import { useAuth } from '../../Firebase/firebase_hooks/useAuth';
 import TypedMessage from '../../components/Elements/TypedMessage';
-import NSAlogo from '../../NSAbrainDaggertrans.png';
+import NSAlogo from '../../assets/pics/NSAbrainDaggertrans.png';
 import Countdown from '../../components/Widgets/Countdown';
 import Ticker from '../../components/Widgets/Ticker';
-import { useToggle } from '../../Utilities/utils';
+import useToggle from '../../Utilities/hooks/useToggle';
 
-
-export default function Navagation({toggleShoppingCart, setPage}) {
+export default function Navagation({ toggleShoppingCart, setPage }) {
   const auth = useAuth();
   const date = new Date();
   const version = process.env.NSA_APP_VERSION || '0.0.13';
@@ -32,8 +31,15 @@ export default function Navagation({toggleShoppingCart, setPage}) {
       </div>
       <div>
         <p>All Be Demanded</p>
-        <p>V. {`${version}`}</p>
-        <p>© {date.getFullYear()}. All Rights Reserved</p>
+        <p>
+          V.
+          {`${version}`}
+        </p>
+        <p>
+          ©
+          {date.getFullYear()}
+          . All Rights Reserved
+        </p>
       </div>
     </>
   );
@@ -42,10 +48,26 @@ export default function Navagation({toggleShoppingCart, setPage}) {
 const Logo = () => {
   const [hovered, toggleHovered] = useToggle();
   return (
-    <div style={{display: 'flex'}}>
-      <div onMouseOver={toggleHovered} onMouseOut={toggleHovered}><img style={{ width: '50px' }} src={NSAlogo} alt="logo" /></div>
-      {!hovered && <h1 className="blink_soft" style={{marginLeft: '10px'}}> <TypedMessage message="New Sense Active"/></h1>}
-      {hovered && <h1 className="blink_soft" style={{marginLeft: '10px'}}> <TypedMessage message="All Be Demanded"/></h1>}
+    <div style={{ display: 'flex' }}>
+      <div onMouseOver={toggleHovered} onMouseOut={toggleHovered}>
+        <img style={{ width: '50px' }} src={NSAlogo} alt="logo" />
+      </div>
+      {
+      !hovered
+        && (
+        <h1 className="blink_soft" style={{ marginLeft: '10px' }}>
+          <TypedMessage message="New Sense Active" />
+        </h1>
+        )
+      }
+      {
+      hovered
+        && (
+        <h1 className="blink_soft" style={{ marginLeft: '10px' }}>
+          <TypedMessage message="All Be Demanded" />
+        </h1>
+        )
+      }
     </div>
   );
 };

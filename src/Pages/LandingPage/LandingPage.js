@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 // Hooks
-import { useToggle } from '../../Utilities/utils';
-import { useAuth } from '../../Firebase/Auth';
+import useToggle from '../../Utilities/hooks/useToggle';
+import { useAuth } from '../../Firebase/firebase_hooks/useAuth';
 // Elements
 import Field from '../../components/Elements/Field';
 import TypedMessage from '../../components/Elements/TypedMessage';
 import PreviousUpdates from './PreviousUpdates';
-import NSAlogo from '../../NSAbrainDaggertrans.png';
+import NSAlogo from '../../assets/pics/NSAbrainDaggertrans.png';
 
 const FormContainer = styled.form` 
   margin-top: 10px;

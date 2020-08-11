@@ -8,7 +8,7 @@ import Statistics from './Statistics';
 import Carousel from '../../components/Elements/Carousel';
 
 import TypedMessage from '../../components/Elements/TypedMessage';
-import { useToggle } from '../../Utilities/utils';
+import useToggle from '../../Utilities/hooks/useToggle';
 
 // TODO ADD LITTLE BONUS CHARACTERISTICS FOR EACH PRODUCT :P META DATA LIKE OPENBASE.io
 

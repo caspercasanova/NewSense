@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // ELements
 import Divider from '../../components/Elements/Divider';
 // Functions / Hooks
-import { useToggle } from '../../Utilities/utils';
+import useToggle from '../../Utilities/hooks/useToggle';
 
 export default function PreviousPurchases({ purchasesArray }) {
   return (

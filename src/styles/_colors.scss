@@ -4,29 +4,35 @@
 $color-epic: #BA87FF;
 $infra_purple: #BA87FF;
 $purple_ultra: #b141f1;
-
-
-
 $color-legendary: #fe7a15;
 $half_life: #fe7a15;
 $yellow_ultra: #ffcc00;
 $pink_ultra: #f92aad;
 $red_alert: #fa2e46a4;
 $sand: #e7d391;
-
-
 $color-rare: #00aeff;
 $cyan_ultra: #58c7e0;
 $color-highlight: #ABF0F9;
-
-
 $color-correct: #0f0;
 $color-complete: #0f0;
 $green_ultra: #54e484;
 $green_meta: #098665;
-
 $color-grey: rgba(255,255,255,0.8);
 
+
+:root{
+  --color-orange: #fe7a15;
+  --color-yellow: #ffcc00;
+  --color-red: #fa2e46a4;
+  --color-pink: #f92aad;
+  --color-cyan: #58c7e0;
+  --color-cyan-ultra: #ABF0F9;
+  --color-green: #0f0;
+  --color-green-ultra: #54e484;
+  --color-grey: rgba(255,255,255,0.8);
+  --color-purple: #b141f1;
+  --color-sand: #e7d391;
+}
 
 /* 
 rgb(28, 65, 86)

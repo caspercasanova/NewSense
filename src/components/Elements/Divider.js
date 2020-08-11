@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const StyledDivider = styled.div`
   width: 100%;
@@ -7,25 +7,23 @@ const StyledDivider = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   & h2{
-    color: #fe7a15;
+    color: var(--color-orange);
   }
 
   & hr{
-    color: #fe7a15;
+    color: var(--color-orange);
     width: 100%;
     height: 2px;
   }
-`
+`;
 
-
-const Divider = ({title = 'xx0001xxx'}) => {
-  return(
+const Divider = ({ title }) => {
+  return (
     <StyledDivider>
-      <h2>{title}</h2>
-      <hr></hr>
+      {title && <h2>{title}</h2>}
+      <hr />
     </StyledDivider>
-  )
-}
+  );
+};
 
-
-export default Divider
+export default Divider;

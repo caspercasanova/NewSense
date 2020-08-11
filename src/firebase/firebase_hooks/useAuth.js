@@ -2,7 +2,7 @@
 // https://usehooks.com/useAuth/
 
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import firebase, { firestore } from './firebase';
+import firebase, { firestore } from '../firebase';
 
 const auth = firebase.auth();
 

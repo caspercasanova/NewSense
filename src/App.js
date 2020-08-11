@@ -7,8 +7,8 @@ import { loadStripe } from '@stripe/stripe-js'; // returns a stripe key or somet
 import Main from './Pages/Main/Main';
 import LandingPage from './Pages/LandingPage/LandingPage';
 // Functions
-import useShoppingCart from './Utilities/useShoppingCart';
-import { useAuth } from './Firebase/Auth';
+import useShoppingCart from './Utilities/hooks/useShoppingCart';
+import { useAuth } from './Firebase/firebase_hooks/useAuth';
 // import {fireStore} from './firebase/firebase'
 import Theme from './styles/Theme';
 

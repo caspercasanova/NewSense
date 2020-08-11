@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import {firestore} from './firebase'
+import {firestore} from '../firebase'
 
 export default function useIngredients(id) {
   const [error, setError] = useState(false)

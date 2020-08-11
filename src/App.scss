@@ -490,19 +490,6 @@ use this
   
 }
 
-.countdown{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  & .countdown_digits{
-    display: flex;
-  }
-  & .interval{
-    margin-right: 3px;
-    margin-left: 3px;
-  }
-}
-
 
 .quantity_container{
   text-align: center;
@@ -688,62 +675,10 @@ use this
 
 
 
-@mixin Inputs($bg){
-  padding: 0px 0px 10px 0px;
-  border: none;
-  border-left: 1px solid $bg;
-  border-bottom: 1px solid $bg;
-  color: $bg;
-  font-size: 16px;
-  padding-left: .3em;
-  letter-spacing: .3em;
-  transition: 0.5s;
-  &:invalid{
-    border: none;
-    border-left: 1px solid $red_alert;
-    border-bottom: 1px solid $red_alert;
-  }
-  &:active{
-    filter: drop-shadow(0 0 1em $bg);
-  }
-}
-
-// Underlined text
-@mixin labels($bg) {
-  color: $bg;
-  position: absolute;
-  display: block;
-  padding: 0.5em;
-  transition: 0.5s;
-  cursor: inherit;
-  top: -80%;
-}
-
-.Field {
-  position: relative;
-  margin-top: 25px;
-  margin-bottom: 10px;
-
-  & .FieldLabel{
-    @include labels($purple_ultra)
-  } 
-  & .ErrorLabel{
-    @include labels($red_alert);
-    
-    top: -80%;
-    right: 1%;
-    
-  } 
-  & .FieldInput{
-    @include Inputs($purple_ultra);
-    left: 0%;
-  }
-}
 
 
 .Statistics_Minor{
   width: 100%;
-
   display: flex;
   flex-wrap: wrap;
   position: relative;

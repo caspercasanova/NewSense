@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useToggle } from '../../Utilities/utils';
+import useToggle from '../../Utilities/hooks/useToggle';
 import Divider from '../../components/Elements/Divider';
 import TypedMessage from '../../components/Elements/TypedMessage';
 import GlowCorners from '../../components/Elements/GlowCorners';

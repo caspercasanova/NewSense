@@ -13,8 +13,8 @@ import Cart from '../Cart&Checkout/Cart';
 import Tooltip from '../../components/Elements/Tooltip';
 import Highlight from '../../components/Elements/Highlight';
 // Functions / Hooks
-import { useToggle } from '../../Utilities/utils';
-import { useAuth } from '../../Firebase/Auth';
+import useToggle from '../../Utilities/hooks/useToggle';
+import {useAuth} from '../../Firebase/firebase_hooks/useAuth';
 
 const MainContainer = styled.div`
   font-family: 'digital-7';

@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 // ELEMENTS
-import NSAlogo from '../../NSAbrainDaggertrans.png';
+import NSAlogo from '../../assets/pics/NSAbrainDaggertrans.png';
 import Divider from '../../components/Elements/Divider';
 import Rewards from './Rewards';
 import PreviousPurchases from './PreviousPurchases';
 // Hooks
-import { useAuth } from '../../Firebase/Auth';
+import { useAuth } from '../../Firebase/firebase_hooks/useAuth';
 
 const purchasesArrayDefault = [
   {
