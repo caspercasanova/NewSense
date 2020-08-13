@@ -93,29 +93,7 @@
 
 
 .TickerBar{
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
   
-  & button{
-    font-size: 12px;
-  }
-  
-  & .ticker_feed{
-    overflow: hidden;
-    width: 100%;
-    height: auto;
-    padding: 0.5em;
-    background: radial-gradient(transparent 70%, $color-highlight);
-    & p{  
-      animation: left-to-right 15s linear infinite;
-    }
-  }
 }
 
 
@@ -546,42 +524,6 @@
 }
 
 
-
-.Carousel{
-  width: 100%;
-  height: auto;
-  & .Carousel_Inner{
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-auto-rows: auto;
-
-  }
-  & .Carousel_Item{
-    list-style: none;
-    cursor: pointer;
-    box-shadow: 0 0 0 1px inset $color-grey;
-    &:hover{
-      color: $color-legendary;
-      box-shadow: 0 0 0 2px inset $color-legendary;
-    }
-    padding: 4px 8px;
-    min-width: 250px;
-  
-  }
-}
-.Carousel_item_body{
-  padding-top: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  & img{
-    width: 100px;
-    height: 100px;
-    background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-  }
-  & picture{}
-}  
 
 
 .Payment_Form{

@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import TypedMessage from '../../components/Elements/TypedMessage';
-import useToggle from '../../Utilities/hooks/useToggle';
 import AccountSVG from '../../assets/svgs/AccountSVG';
 import CartSVG from '../../assets/svgs/CartSVG';
-import Row from '../../components/Elements/Row';
 import LogoPic from '../../assets/pics/NSAbrainDaggertrans.png'
 
 const HeaderContainer = styled.div`
@@ -12,7 +10,9 @@ const HeaderContainer = styled.div`
   display: flex;
   border-bottom: 1px solid var(--color-cyan);
   align-items: center;
-  justify-content: space-evenly;
+  padding-left: 10px;
+  padding-right: 40px;
+  justify-content: space-between;
   width: 100%;
   `;
 
@@ -28,27 +28,22 @@ const CartBtn = styled(CartSVG)`
   cursor: pointer;
 `;
 
-const NewRow = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-`;
-const Picture = styled.img`
-  width: 35px;
-  height: auto;
-  cursor: pointer;
+  * {
+     margin-left: 10px;
+  }
 `;
 
 export default function Header({setPage}) {
   return (
     <HeaderContainer>
-      <div>nusnseactv</div>
-      <NewRow>
+      <h1><TypedMessage message="New Sense Active" /></h1>
+      <ButtonContainer>
         <CartBtn onClickHandler={() => setPage('cart')} />
         <AccountBtn onClickHandler={() => setPage('profile_page')} />
-        <div>
-          <Picture onClick={() => setPage('about_page')} src={LogoPic} alt='about_profile_btn'/>
-        </div>
-      </NewRow>
+      </ButtonContainer>
     </HeaderContainer>
   );
 }

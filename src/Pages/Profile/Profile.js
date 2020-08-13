@@ -106,11 +106,13 @@ export default function Profile() {
         <hr style={{width: '100%'}} />
         <Row>
           <h5>UID: {defaultProfile.uid}</h5>
-          <button type="button" className="basic_btn">Delete Account</button>
         </Row>
       </Card>
       <Rewards currentPoints={defaultProfile.currentPoints} />
       <PreviousPurchases purchasesArray={defaultProfile.previousPurchases} />
+      <Card>
+          <button type="button" className="basic_btn">Delete Account</button>
+      </Card>
     </ProfileContainer>
   );
 }
