@@ -22,6 +22,8 @@ const MainContainer = styled.div`
   font-family: 'digital-7';
   height: 100%;
   width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
   display: flex;
   overflow: hidden;
   padding-right: 25px;
@@ -42,6 +44,7 @@ const BackgroundImage = styled.div`
   filter: brightness(10%);
   z-index: -1;
 `;
+
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: column;

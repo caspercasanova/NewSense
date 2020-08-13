@@ -5,6 +5,7 @@ import Icon from '../../components/Elements/Icon'
 const SVG = styled(Icon)`
   height: 35px;
   width: auto;
+  cursor: pointer;
 `;
 
 export default function CartSVG({classname, color = "var(--color-grey-ultra)", onClickHandler}) {
