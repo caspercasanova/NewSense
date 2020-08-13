@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import Field from '../Elements/Field';
 import Modal from '../Elements/Modal';
 import useInterval from '../../Utilities/hooks/useInterval';
 // import useCollection from '../../Firebase/firebase_hooks/useCollection';
-import styled from 'styled-components';
 
 
 
@@ -68,7 +68,9 @@ export default function Ticker() {
   return (
     <>
       <TickerBarContainer>
-        <button type="button" className="basic_btn" onClick={() => setModal(!modal)}>Add A Phrase</button>
+        <div style={{textAlign: 'center'}}>
+          <button type="button" className="basic_btn" onClick={() => setModal(!modal)}>Add A Phrase</button>
+        </div>
         <TickerBar>
           <p>{phrase}</p>
         </TickerBar>

@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import TypedMessage from '../../components/Elements/TypedMessage';
 import AccountSVG from '../../assets/svgs/AccountSVG';
 import CartSVG from '../../assets/svgs/CartSVG';
-import LogoPic from '../../assets/pics/NSAbrainDaggertrans.png'
+import TShirtSVG from '../../assets/svgs/TShirtSVG';
+
 
 const HeaderContainer = styled.div`
   box-shadow: rgba(0, 0, 0, 0.27) 0px 2px 3px 2px;
@@ -15,6 +16,11 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   `;
+const ProductsBtn = styled(TShirtSVG)`
+  height: 35px;
+  width: auto;
+  cursor: pointer;
+`;
 
 const AccountBtn = styled(AccountSVG)`
   height: 40px;
@@ -41,6 +47,7 @@ export default function Header({setPage}) {
     <HeaderContainer>
       <h1><TypedMessage message="New Sense Active" /></h1>
       <ButtonContainer>
+        <ProductsBtn onClickHandler={() => setPage('product_page')}/>
         <CartBtn onClickHandler={() => setPage('cart')} />
         <AccountBtn onClickHandler={() => setPage('profile_page')} />
       </ButtonContainer>
