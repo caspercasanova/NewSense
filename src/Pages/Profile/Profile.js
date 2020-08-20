@@ -1,12 +1,16 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
+import styled from 'styled-components';
 // ELEMENTS
-import NSAlogo from '../../NSAbrainDaggertrans.png';
-import Divider from '../../components/Elements/Divider';
+import Row from '../../components/Elements/Row';
+import Card from '../../components/Elements/Card';
 import Rewards from './Rewards';
 import PreviousPurchases from './PreviousPurchases';
 // Hooks
-import { useAuth } from '../../Firebase/Auth';
+import { useAuth } from '../../Firebase/firebase_hooks/useAuth';
+// Assets
+import NSAlogo from '../../assets/pics/NSAbrainDaggertrans.png';
+
 
 const purchasesArrayDefault = [
   {
@@ -37,6 +41,27 @@ const purchasesArrayDefault = [
   },
 ];
 
+const ProfileContainer = styled.div`
+  padding-top: 10px;
+  & h5 {
+    color: var(--color-grey);
+  }
+`;
+
+const StyledHeader = styled.div`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  & h2 {
+    color: var(--color-purple);
+  }
+  & hr {
+    width: 100%;
+    color: var(--color-purple);
+  }
+`;
+
+
 export default function Profile() {
   const auth = useAuth();
   const defaultProfile = {
@@ -48,33 +73,46 @@ export default function Profile() {
     previousPurchases: auth.user.previousPurchases || purchasesArrayDefault,
   };
 
+
   return (
-    <div>
-      <Divider title="Profile" />
-      <div>
-        <div style={{ display: 'flex' }}>
-          <h3>Display Name: {defaultProfile.displayName}</h3>
+    <ProfileContainer>
+      <Card>
+        <StyledHeader>
+          <Row>
+            <h2>Profile</h2>
+            <button type="button" className="basic_btn" onClick={auth.signout}>Logout</button>
+          </Row>
+          <hr />
+        </StyledHeader>
+        <Row>
+          <div>
+            <h5>Display Name:</h5>
+            <h3>{defaultProfile.displayName}</h3>
+          </div>
+          <div>
+            <h5>Email:</h5>
+            <h3>{defaultProfile.email}</h3>
+          </div>
+        </Row>
+        <Row>
           <button type="button" className="basic_btn">Update Username</button>
-        </div>
-        <div style={{ display: 'flex' }}>
+          <button type="button" className="basic_btn">Update Email</button>
+        </Row>
+        <hr style={{width: '100%'}} />
+        <Row>
           <div><img style={{ width: '100px' }} src={defaultProfile.photoURL} alt="logo" /></div>
           <button type="button" className="basic_btn">Update Photo</button>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <h3>Email: {defaultProfile.email}</h3>
-          <button type="button" className="basic_btn">Update Email</button>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <h3>UID: {defaultProfile.uid}</h3>
-        </div>
-        <div style={{ display: 'flex' }}>
-          <button type="button" className="basic_btn">Delete Account</button>
-        </div>
-      </div>
-      
+        </Row>
+        <hr style={{width: '100%'}} />
+        <Row>
+          <h5>UID: {defaultProfile.uid}</h5>
+        </Row>
+      </Card>
       <Rewards currentPoints={defaultProfile.currentPoints} />
-      
       <PreviousPurchases purchasesArray={defaultProfile.previousPurchases} />
-    </div>
+      <Card>
+          <button type="button" className="basic_btn">Delete Account</button>
+      </Card>
+    </ProfileContainer>
   );
 }

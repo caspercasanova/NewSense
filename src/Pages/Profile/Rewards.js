@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useToggle } from '../../Utilities/utils';
-import Divider from '../../components/Elements/Divider';
+import useToggle from '../../Utilities/hooks/useToggle';
+
 import TypedMessage from '../../components/Elements/TypedMessage';
 import GlowCorners from '../../components/Elements/GlowCorners';
+import Card from '../../components/Elements/Card';
 
 export default function Rewards({ currentPoints }) {
   const rewardsArrays = [
@@ -19,56 +20,51 @@ export default function Rewards({ currentPoints }) {
   ];
 
   return (
-    <>
-
-      <Divider title="Rewards" />
-      <div>
-        <div style={{ display: 'flex' }}>
-          <div style={{ width: '100%' }}>
-            <h3>
-              Current Points:
-              {currentPoints}
-            </h3>
-            <h3>
-              Current Rank:
-              {currentPoints}
-            </h3>
-          </div>
-          <div style={{ width: '100%' }}>
-            <h3>Next Rank: </h3>
-            <h3>Points Needed Till Next Rank: </h3>
-          </div>
+    <Card header="Rewards">
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '100%' }}>
+          <h3>
+            Current Points:
+            {currentPoints}
+          </h3>
+          <h3>
+            Current Rank:
+            {currentPoints}
+          </h3>
         </div>
-        <NewProgressBar percentage={50} start={0} end={13} currentRank="Ghost" nextRank="New_Sense" />
-
-        <h3>Ranks & Rewards</h3>
-        <GlowCorners>
-          <div style={{ display: 'flex', padding: '10px 14px' }}>
-            <h4 style={{ width: '100%' }}>Rank</h4>
-            <h4 style={{ width: '100%' }}>Points Req.</h4>
-            <h4 style={{ width: '100%' }}>Reward</h4>
-            <h4 style={{ width: '100%' }}>Status</h4>
-          </div>
-          <hr />
-
-          <ul style={{ padding: '10px' }}>
-            {rewardsArrays.map((rewardsArr, index) => {
-              const hasRank = currentPoints >= rewardsArr[0];
-              return (
-                <Reward
-                  key={index}
-                  pointsRequired={rewardsArr[0]}
-                  reward={rewardsArr[1]}
-                  tier={rewardsArr[2]}
-                  hasRank={hasRank}
-                />
-              );
-            })}
-          </ul>
-        </GlowCorners>
+        <div style={{ width: '100%' }}>
+          <h3>Next Rank: </h3>
+          <h3>Points Needed Till Next Rank: </h3>
+        </div>
       </div>
+      <NewProgressBar percentage={50} start={0} end={13} currentRank="Ghost" nextRank="New_Sense" />
 
-    </>
+      <h3>Ranks & Rewards</h3>
+      <GlowCorners>
+        <div style={{ display: 'flex', padding: '10px 14px' }}>
+          <h4 style={{ width: '100%' }}>Rank</h4>
+          <h4 style={{ width: '100%' }}>Points Req.</h4>
+          <h4 style={{ width: '100%' }}>Reward</h4>
+          <h4 style={{ width: '100%' }}>Status</h4>
+        </div>
+        <hr />
+
+        <ul style={{ padding: '10px' }}>
+          {rewardsArrays.map((rewardsArr, index) => {
+            const hasRank = currentPoints >= rewardsArr[0];
+            return (
+              <Reward
+              key={index}
+                pointsRequired={rewardsArr[0]}
+                reward={rewardsArr[1]}
+                tier={rewardsArr[2]}
+                hasRank={hasRank}
+              />
+            );
+          })}
+        </ul>
+      </GlowCorners>
+    </Card>
   );
 }
 

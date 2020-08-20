@@ -1,5 +1,20 @@
-import React,{ useState} from 'react';
-import { useInterval } from '../../Utilities/utils';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import useInterval from '../../Utilities/hooks/useInterval';
+
+const CountdownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  & .countdown_digits{
+    display: flex;
+  }
+  & .interval{
+    margin-right: 3px;
+    margin-left: 3px;
+  }
+`;
 
 const Countdown = ({ date = '2020-09-11' }) => {
   const calculateTimeLeft = () => {
@@ -34,13 +49,15 @@ const Countdown = ({ date = '2020-09-11' }) => {
   });
 
   return (
-    <div className="countdown">
+    <CountdownContainer>
       <h3>Time Until Launch</h3>
       <div className="countdown_digits">
         {timerComponents.length && timerComponents}
       </div>
-    </div>
+    </CountdownContainer>
   );
 };
+
+Countdown.propTypes = { date: PropTypes.string.isRequired };
 
 export default Countdown;

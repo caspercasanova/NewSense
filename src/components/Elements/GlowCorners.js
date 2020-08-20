@@ -1,19 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-
-
-
-
-
-
-
+import React from 'react';
+import styled from 'styled-components';
 
 const TrayContainer = styled.div`
   position: relative;
   width: 100%;
 `;
-
-
 
 const Corners = styled.div`
   position: absolute;
@@ -41,8 +32,6 @@ const Corners = styled.div`
   }  
 `;
 
-
-
 const TopCorners = styled(Corners)`
   top: 0px;
   &:before{
@@ -66,15 +55,12 @@ const BottomCorners = styled(Corners)`
   }
 `;
 
-
-
-
-export default function GlowCorners({children}) {
+export default function GlowCorners({ children }) {
   return (
     <TrayContainer>
       {children}
       <TopCorners />
       <BottomCorners />
     </TrayContainer>
-  )
+  );
 }

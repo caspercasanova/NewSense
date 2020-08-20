@@ -3,15 +3,13 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 // ELements
-import Divider from '../../components/Elements/Divider';
+import Card from '../../components/Elements/Card';
 // Functions / Hooks
-import { useToggle } from '../../Utilities/utils';
+import useToggle from '../../Utilities/hooks/useToggle';
 
 export default function PreviousPurchases({ purchasesArray }) {
   return (
-    <>
-      <Divider title="Previous Purchases" />
-
+    <Card header="Previous Purchases">
       <h3>Ranks & Rewards</h3>
       <div style={{ border: '1px solid rgba(70, 70, 70, 0.8)' }}>
         <div style={{ display: 'flex', padding: '10px 14px' }}>
@@ -28,7 +26,7 @@ export default function PreviousPurchases({ purchasesArray }) {
             ))}
         </ul>
       </div>
-    </>
+    </Card>
   );
 }
 

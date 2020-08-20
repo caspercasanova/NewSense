@@ -1,26 +1,45 @@
-import React from 'react'
-import AreaChartContainer from '../../components/Charts/AreaChartContainer'
-import Divider from '../../components/Elements/Divider'
+import React from 'react';
+import AreaChartContainer from '../../components/Charts/AreaChartContainer';
+
 /* SASS METRICS */
+import Countdown from '../../components/Widgets/Countdown';
+import Card from '../../components/Elements/Card';
+import InnerCard from '../../components/Elements/InnerCard';
 
 export default function About() {
+  const date = new Date();
+  const version = process.env.NSA_APP_VERSION || '0.0.13';
   return (
-    <div>
-      <div>
-        <Divider title="About" />
-        <h3>Mission Statement: </h3>
-        <h3># of Purchases</h3>
+    <Card header="About">
+      <Countdown />
+      <InnerCard header='Mission Statement'>
+        <p>Never Stop Chasin Success</p>
+      </InnerCard>
+      <InnerCard header="Total Purchases">
         <AreaChartContainer />
-        <h3>Total Sales</h3>
+      </InnerCard>
+      <InnerCard header="Total Sales">
         <AreaChartContainer />
-        <h3># of Accounts</h3>
+      </InnerCard>
+      <InnerCard header="# of Likes">
         <AreaChartContainer />
-        <h3>Monthly Expenditure</h3>
+      </InnerCard>
+      <InnerCard header="Monthly Expenditure">
         <AreaChartContainer />
-        <h3># of Followers ( Twitter )</h3>  
-        <h3># of Likes ( Instagram )</h3>  
-      </div>
-    </div>
-  )
-}
+      </InnerCard>
 
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <p>All Be Demanded</p>
+        <p>
+          V.
+          {`${version}`}
+        </p>
+        <p>
+          ©
+          {date.getFullYear()}
+          . All Rights Reserved
+        </p>
+      </div>
+    </Card>
+  );
+}

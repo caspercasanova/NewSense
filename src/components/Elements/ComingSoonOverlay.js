@@ -18,7 +18,7 @@ export default function ComingSoonOverlay() {
   return overlay ? (
     <ComingSoonOverLayDiv>
       <div>Coming Soon...</div>
-      <button className='basic_btn' onClick={()=>closeOverLay(false)}>Let Me See</button>
+      <button className="basic_btn" type="button" onClick={() => closeOverLay(false)}>Let Me See</button>
     </ComingSoonOverLayDiv>
   ) : (<></>);
 }

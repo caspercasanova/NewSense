@@ -1,13 +1,6 @@
 
 @import "styles/colors", "styles/sizing";
 
-/* AT 500 lines, break apart into seperate files 
-
-border: 1px solid rgba(0,162,253,0.15);
-rgba(22, 104, 159, 0.2);
-use this
-
-*/
 
 .App {
   position: relative;
@@ -17,11 +10,7 @@ use this
   margin: 0 auto;
   width: 100%;
   height: 100%;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
-
-
 
 .Product_Section{
   width: 100%;
@@ -29,7 +18,6 @@ use this
   display: flex;
   flex-direction: column;
   justify-content: space-between; 
-  
 }
 
 
@@ -81,6 +69,7 @@ use this
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: hsl(0, 0%, 9%);
   & input{
     height: 30px;
     padding-left: 10px;
@@ -101,36 +90,8 @@ use this
 }
 
 
-
-
-
-
-
-
 .TickerBar{
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
   
-  & button{
-    font-size: 12px;
-  }
-  
-  & .ticker_feed{
-    overflow: hidden;
-    width: 100%;
-    height: auto;
-    padding: 0.5em;
-    background: radial-gradient(transparent 70%, $color-highlight);
-    & p{  
-      animation: left-to-right 15s linear infinite;
-    }
-  }
 }
 
 
@@ -177,6 +138,7 @@ use this
   justify-content: space-evenly;
   position: relative;
 }
+
 .placeholder_img_SM{
   position: relative;
   background-color: gray;
@@ -187,14 +149,6 @@ use this
     background-color: darken($color: #000000, $amount: 10%);
   }
 }
-
-.product_title{
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 100px;
-}
-
-
 
 
 .chart_holder{
@@ -217,36 +171,13 @@ use this
 }
 
 
-.connection_thing{
-  justify-self: flex-end;
-  position: relative;
-  height: 15px;
-  width: 15px;
-  animation: spin 2s infinite;
-  border: 1px solid $color-highlight;
-  &:before{
-    position: absolute;
-    content: '';
-    top: 10%;
-    left: 19%;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 5px 8.7px 5px;
-    border-color: transparent transparent $color-legendary transparent;
-    animation: spin 2s infinite reverse;
-  }
-}
-
-
-
-
 
 /* ACCOUNT FORM STYLING */
 .account_form{
   display: flex;
   flex-direction: column;
 }
+
 .form_col{
   display: flex;
   border-radius: $border-radius;
@@ -261,9 +192,9 @@ use this
   > h6 {
     position: absolute;
     top: 1%; left: 1%;
-  }
-  
+  }  
 }
+
 .form_input{
   position: relative;
   > label {
@@ -290,20 +221,11 @@ use this
     
   }
 }
+
 .form_row{
   display: flex;
   justify-content: flex-start;
 }
-/* form_input */
-
-
-
-
-/* 
-
-#GLOW TRAY BOX
-
-*/
 
 .tray{
   width: 100%;
@@ -397,11 +319,6 @@ use this
   }
 }
 
-
-
-
-
-
 .Modal_background{
   position: fixed;
   left: 0;
@@ -444,16 +361,6 @@ use this
   }
 }
 
-
-
-
-
-
-
-
-
-
-
 .TextBox{
   display: flex; 
   flex-direction: column;
@@ -488,19 +395,6 @@ use this
     padding: 0px 10px 0px 10px;
   }
   
-}
-
-.countdown{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  & .countdown_digits{
-    display: flex;
-  }
-  & .interval{
-    margin-right: 3px;
-    margin-left: 3px;
-  }
 }
 
 
@@ -629,42 +523,6 @@ use this
 
 
 
-.Carousel{
-  width: 100%;
-  height: auto;
-  & .Carousel_Inner{
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-auto-rows: auto;
-
-  }
-  & .Carousel_Item{
-    list-style: none;
-    cursor: pointer;
-    box-shadow: 0 0 0 1px inset $color-grey;
-    &:hover{
-      color: $color-legendary;
-      box-shadow: 0 0 0 2px inset $color-legendary;
-    }
-    padding: 4px 8px;
-    min-width: 250px;
-    & .Carousel_item_body{
-      padding-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      & img{
-        width: 100px;
-        
-        height: 100px;
-        background-image: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-      }
-      & picture{}
-    }   
-  }
-}
-
 
 .Payment_Form{
   width: 100%;
@@ -678,110 +536,12 @@ use this
 .FormGroup{
   display: flex;
   justify-content: space-between;
-
   width: 100%;
   & .Field{
     margin-left: 10px;
     margin-right: 10px;
   }
 }
-
-
-
-@mixin Inputs($bg){
-  padding: 0px 0px 10px 0px;
-  border: none;
-  border-left: 1px solid $bg;
-  border-bottom: 1px solid $bg;
-  color: $bg;
-  font-size: 16px;
-  padding-left: .3em;
-  letter-spacing: .3em;
-  transition: 0.5s;
-  &:invalid{
-    border: none;
-    border-left: 1px solid $red_alert;
-    border-bottom: 1px solid $red_alert;
-  }
-  &:active{
-    filter: drop-shadow(0 0 1em $bg);
-  }
-}
-
-// Underlined text
-@mixin labels($bg) {
-  color: $bg;
-  position: absolute;
-  display: block;
-  padding: 0.5em;
-  transition: 0.5s;
-  cursor: inherit;
-  top: -80%;
-}
-
-.Field {
-  position: relative;
-  margin-top: 25px;
-  margin-bottom: 10px;
-
-  & .FieldLabel{
-    @include labels($purple_ultra)
-  } 
-  & .ErrorLabel{
-    @include labels($red_alert);
-    
-    top: -80%;
-    right: 1%;
-    
-  } 
-  & .FieldInput{
-    @include Inputs($purple_ultra);
-    left: 0%;
-  }
-}
-
-
-.Statistics_Minor{
-  width: 100%;
-
-  display: flex;
-  flex-wrap: wrap;
-  position: relative;
-}
-
-
-
-
-.Cart{
-  width: 100%;
-  border: 1px solid $yellow_ultra;
-  padding: 10px;
-  .Cart_header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .Cart_item{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
-    box-shadow: 0 0 5px 0px rgba(128, 128, 128, .25) inset;
-    padding: 5px 10px; 
-    & button{
-      font-size: 22px;
-    }
-  }
-
-  .Cart_item_picture{
-    max-width: 50px;
-    height: auto;
-  }
-}
-
-
-
-
 
 
 

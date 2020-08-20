@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import LightningBolt from '../../svgs/LightningBolt'
+import LightningBolt from '../../assets/svgs/LightningBolt'
 /* 
 TODO Covnert to react spring
 */

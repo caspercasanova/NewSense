@@ -2,56 +2,35 @@ import React from 'react'
 import styled from 'styled-components'
 
 
-/* 
-button container???? 
 
-Greyed out == unavail
-Red == error
-Active == background color filled + sound
-Innactive == grayed
-Hover == border gets bigger color filled + sounds
-  hover sound = major, minor
-
-todo: scroll bar has text shadow
-*/
-
-const handleColor = (color) => {
-  switch(color){
-    case "inactive":
-      return 'gray'
-    case "error":
-      return color
-    default: //active
-      return 'something'
+const ButtonContainer = styled.button`
+  position: relative;
+  border: none;
+  cursor: pointer;
+  background: none;
+  text-transform: uppercase;
+  font-family: 'digital-7';
+  display: inline-block;
+  color: ${(props) => props.error ? 'var(--color-red)' : 'var(--color-cyan-ultra)'};
+  padding: .5em .8em;
+  color: ${(props) => props.error ? 'var(--color-red)' : 'var(--color-cyan-ultra)'};
+  z-index: 1;
+  box-shadow: 0px 0px 0px 1px $bg;
+  transition: .2s ease-in;
+  & hover{
+    box-shadow:0px 0px 0px 4px ${(props) => props.error ? 'var(--color-red)' : 'var(--color-cyan-ultra)'} inset;
   }
-}
+  & active{
+    background: darken(${(props) => props.error ? 'var(--color-red)' : 'var(--color-cyan-ultra)'}, 20%);
+  }
+`;
 
 
-
-
-// const ButtonBase = styled.button`
-// text-transform: uppercase;
-
-// position: relative;
-// cursor: pointer;
-// padding: .5em .8em;
-// z-index: 10;
-// box-shadow: 0px 0px 0px 1px $bg;
-
-
-// :disabled{
-//   cursor: not-allowed;
-// }
-// :hover{ 
-//   box-shadow:0px 0px 0px 4px $bg inset;
-// }
-
-// `;
-
-
-const Button = ({type}) => {
+const Button = ({type, error, children, onClickHandler}) => {
   return (
-    <button type={`${type}`} >Something</button>
+    <ButtonContainer error={error} type={`${type}`} onClick={onClickHandler}>
+      {children}
+    </ButtonContainer>
   );
 };
 
